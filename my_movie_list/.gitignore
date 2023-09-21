@@ -2,7 +2,12 @@
 *
 
 #Exceto...
-!assets/*
-!lib/*
+
+!assets/images/*
+!lib/data/dados.dart
+!lib/components/*
+!lib/models/*
+!lib/screens/*
+!lib/utils/rotas.dart
 !.gitignore
 !pubspec.yaml
