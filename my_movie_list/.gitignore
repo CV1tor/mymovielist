@@ -2,12 +2,20 @@
 *
 
 #Exceto...
-
+#Assets
+!assets/
+!assets/images/
 !assets/images/*
+
+#Lib
+!lib/
+!lib/*/
 !lib/data/dados.dart
 !lib/components/*
 !lib/models/*
 !lib/screens/*
 !lib/utils/rotas.dart
+
+#Arquivos de configuração
 !.gitignore
 !pubspec.yaml
