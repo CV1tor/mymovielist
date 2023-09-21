@@ -10,18 +10,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'PlacesToGo',
+      title: 'MyMovieList',
       theme: ThemeData(
         colorScheme: ThemeData()
             .colorScheme
-            .copyWith(primary: Colors.red, secondary: Colors.amber),
+            .copyWith(primary: Colors.red, secondary: Colors.white),
         fontFamily: 'Raleway',
         canvasColor: Colors.black,
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
                 fontSize: 20,
                 fontFamily: 'RobotoCondensed',
-                color: Colors.white,
+                
               ),
             ),
       ),

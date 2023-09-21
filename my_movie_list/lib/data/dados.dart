@@ -2,9 +2,9 @@ import '../models/usuario.dart';
 import '../models/filme.dart';
 
 const USUARIOS_CADASTRADOS = [
-  Usuario(nome: "John Doe", email: "john@mail.com", senha: "123"),
-  Usuario(nome: "Peter Parker", email: "peter@mail.com", senha: "spiderman101"),
-  Usuario(nome: "Luke Skywalker", email: "luke@mail.com", senha: "jedi123")
+  Usuario(nome: "John Doe",  senha: "123"),
+  Usuario(nome: "Peter Parker", senha: "spiderman101"),
+  Usuario(nome: "Luke Skywalker",  senha: "jedi123")
 ];
 
 var FILMES = [

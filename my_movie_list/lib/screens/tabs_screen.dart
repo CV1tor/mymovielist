@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/screens/favoritos_screen.dart';
-import 'package:my_movie_list/screens/movie_screen.dart';
+import 'package:my_movie_list/screens/filmes_screen.dart';
 
 
 class TabsScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
 
     return Scaffold(
-      appBar: AppBar(title: Text('Bora Viajar?')),
+      appBar: AppBar(title: Text('MyMovieList')),
       body: _screens[_indexSelectedScreen],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectScreen,
