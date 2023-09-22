@@ -29,7 +29,7 @@ var FILMES = [
     ]
   ),
   Filme(
-    titulo: "Openheimer",
+    titulo: "Oppenheimer",
     descricao: "A história do cientista americano J. Robert Oppenheimer e o seu papel no desenvolvimento da bomba atômica.",
     imagem: "assets/images/openheimer.jpg",
     genero: [
@@ -61,7 +61,7 @@ var FILMES = [
   Filme(
     titulo: "Pânico VI",
     descricao: "Os sobreviventes dos assassinatos de Ghostface deixam Woodsboro para trás e iniciam um novo capítulo na cidade de Nova York.",
-    imagem: "assets/images/scream_vi",
+    imagem: "assets/images/scream_vi.jpg",
     genero: [
       "Terror",
       "Mistério",
