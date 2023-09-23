@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_movie_list/screens/comentario_screen.dart';
 import 'package:my_movie_list/screens/login_screen.dart';
 import 'package:my_movie_list/screens/tabs_screen.dart';
 import 'package:my_movie_list/utils/rotas.dart';
-
 
 void main() => runApp(MyApp());
 
@@ -21,17 +21,16 @@ class MyApp extends StatelessWidget {
               headline6: TextStyle(
                 fontSize: 20,
                 fontFamily: 'RobotoCondensed',
-                
               ),
             ),
       ),
       //home: CountriesScreen(),
-      initialRoute: '/login',
+      initialRoute: '/comments',
       routes: {
         Rotas.HOME: (ctx) => TabsScreen(),
         Rotas.LOGIN: (ctx) => LoginScreen(),
+        Rotas.COMMENT: (ctx) => ComentarioScreen(),
         //Rotas.MOVIE_DETAIL: (ctx) => PlaceDetailScreen()
-      
       },
       debugShowCheckedModeBanner: false,
     );
