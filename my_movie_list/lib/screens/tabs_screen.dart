@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_movie_list/screens/favoritos_screen.dart';
 import 'package:my_movie_list/screens/filmes_screen.dart';
 
-
 class TabsScreen extends StatefulWidget {
   @override
   State<TabsScreen> createState() => _TabsScreenState();
@@ -21,8 +20,6 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(title: Text('MyMovieList')),
       body: _screens[_indexSelectedScreen],
