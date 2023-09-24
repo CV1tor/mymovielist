@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:my_movie_list/components/comentario_widget.dart';
 import 'package:my_movie_list/components/tag_genero.dart';
 import 'package:my_movie_list/models/comentario.dart';
+import 'package:my_movie_list/models/filme.dart';
 
 import '../components/form_comentario.dart';
 
 class ComentarioScreen extends StatefulWidget {
-  List<String> generos;
-  ComentarioScreen({super.key, required this.generos});
+  Filme filme;
+  final Function(Filme) adicionarFavoritos;
+  final Function(Filme) eFavorito;
+  ComentarioScreen({
+    super.key,
+    required this.filme,
+    required this.adicionarFavoritos,
+    required this.eFavorito,
+    });
 
   @override
   State<ComentarioScreen> createState() => _ComentarioScreenState();
@@ -38,14 +46,14 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
       return Scaffold(
         appBar: AppBar(
         leadingWidth: 20,
-        title: Text('Guardiões das Galáxias vol. 3'),
+        title: Text(widget.filme.titulo),
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Image.asset('assets/images/guardians.jpg', height: 300, width: 400, fit: BoxFit.fill),
+              Image.asset(widget.filme.imagem, height: 300, width: 400, fit: BoxFit.fill),
               Container(
                 padding: EdgeInsets.all(12),
                 child: Column(
@@ -58,7 +66,12 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                           // onTap: _abrirFormularioComentario(context),
                         ),
                         const SizedBox(width: 12),
-                        Image.asset('assets/icons/icone_favorito.png', height: 28),
+                        InkWell(
+                          child: widget.eFavorito(widget.filme) 
+                            ? Image.asset('assets/icons/icone_favorito_vermelho.png', height: 30) 
+                            : Image.asset('assets/icons/icone_favorito.png', height: 28),
+                          onTap: widget.adicionarFavoritos(widget.filme),
+                        ),
                       ]
                     ),
                     Container(
@@ -68,9 +81,9 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                         child: ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
-                              itemCount: widget.generos.length,
+                              itemCount: widget.filme.genero.length,
                               itemBuilder: (context, index) {
-                                final generoTipo = widget.generos[index];
+                                final generoTipo = widget.filme.genero[index];
                                 return Padding(
                                   padding: EdgeInsets.only(right: 15),
                                   child: TagGenero(genero: generoTipo),
@@ -80,7 +93,7 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      "Super Hero partners Scott Lang and Hope Van Dyne return to continue their adventures as Ant-Man and The Wasp. Together, with Hope’s parents Hank Pym and Janet Van Dyne, the family finds themselves exploring the Quantum Realm, interacting with strange new creatures, and embarking on an adventure that will push them beyond the limits of what they thought was possible.",
+                      widget.filme.descricao,
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                     Visibility(
