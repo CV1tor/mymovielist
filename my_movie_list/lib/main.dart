@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Rotas.HOME: (ctx) => TabsScreen(),
         Rotas.LOGIN: (ctx) => LoginScreen(),
-        Rotas.COMMENT: (ctx) => ComentarioScreen(),
+        Rotas.COMMENT: (ctx) => ComentarioScreen(generos: ['Aventura', 'Ação', 'Comédia', 'Comédia', 'Comédia']),
         //Rotas.MOVIE_DETAIL: (ctx) => PlaceDetailScreen()
       },
       debugShowCheckedModeBanner: false,

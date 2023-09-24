@@ -67,6 +67,8 @@ flutter:
     - assets/images/john_wick.jpg
     - assets/images/scream_vi.jpg
     - assets/images/spiderverse.jpg
+    - assets/icons/icone_comentario.png
+    - assets/icons/icone_favorito.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
