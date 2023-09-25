@@ -70,6 +70,10 @@ flutter:
     - assets/icons/icone_comentario.png
     - assets/icons/icone_favorito.png
     - assets/icons/icone_favorito_vermelho.png
+    - assets/images/guardians/guardians_1.jpg
+    - assets/images/guardians/guardians_2.jpeg
+    - assets/images/guardians/guardians_3.jpg
+    - assets/images/guardians/guardians_4.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

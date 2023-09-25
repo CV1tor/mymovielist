@@ -53,7 +53,7 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Image.asset(widget.filme.imagem, height: 300, width: 400, fit: BoxFit.fill),
+              Image.asset(widget.filme.banner, height: 300, width: 400, fit: BoxFit.fill),
               Container(
                 padding: EdgeInsets.all(12),
                 child: Column(
@@ -77,25 +77,54 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                     Container(
                       height: 30,
                       margin: const EdgeInsets.only(top: 10),
-                      child: Expanded(
-                        child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: widget.filme.genero.length,
-                              itemBuilder: (context, index) {
-                                final generoTipo = widget.filme.genero[index];
-                                return Padding(
-                                  padding: EdgeInsets.only(right: 15),
-                                  child: TagGenero(genero: generoTipo),
-                                );
-                              }),
-                      ),
+                      child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: widget.filme.genero.length,
+                            itemBuilder: (context, index) {
+                              final generoTipo = widget.filme.genero[index];
+                              return Padding(
+                                padding: EdgeInsets.only(right: 15),
+                                child: TagGenero(genero: generoTipo),
+                              );
+                            }),
                     ),
                     const SizedBox(height: 16),
                     Text(
                       widget.filme.descricao,
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
+                    const SizedBox(height: 18),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Imagens",
+                        style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                      height: 200,
+                      margin: const EdgeInsets.fromLTRB(0, 10, 0, 18),
+                      child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: widget.filme.imagens.length,
+                            itemBuilder: (context, index) {
+                              final imagem = widget.filme.imagens[index];
+                              return Padding(
+                                padding: EdgeInsets.only(right: 15),
+                                child: Image.asset(imagem),
+                              );
+                            }),
+                    ),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Comentários",
+                        style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     Visibility(
                       visible: listaTarefas.isNotEmpty,
                       replacement: Center(
