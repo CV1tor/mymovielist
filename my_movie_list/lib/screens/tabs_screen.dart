@@ -11,7 +11,11 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   int _indexSelectedScreen = 0;
 
-  List<Widget> _screens = [MoviesScreen(), FavoritosScreen()];
+  _logout (BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  List<Widget> _screens = [FilmesScreen(), FavoritosScreen()];
 
   _selectScreen(int index) {
     setState(() {
@@ -23,20 +27,25 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
 
 
+
     return Scaffold(
-      appBar: AppBar(title: Text('MyMovieList')),
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(leading: IconButton(icon: Icon(Icons.logout), onPressed: () => _logout(context),), backgroundColor: Color.fromRGBO(0, 0, 0, 0.7), title: Text("MyMovieList"), centerTitle: true, titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
       body: _screens[_indexSelectedScreen],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromRGBO(0, 0, 0, 0.935),
         onTap: _selectScreen,
-        selectedItemColor: Theme.of(context).colorScheme.secondary,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
         unselectedItemColor: Colors.white,
+        elevation: 0,
+        selectedIconTheme: IconThemeData(size: 27),
         currentIndex: _indexSelectedScreen,
-        backgroundColor: Theme.of(context).colorScheme.primary,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Filmes'),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favoritos'),
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: 'Favoritos'),
         ],
-      ),
+      ), 
     );
   }
 }

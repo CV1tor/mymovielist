@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Rotas.HOME: (ctx) => TabsScreen(),
         Rotas.LOGIN: (ctx) => LoginScreen(),
-        //Rotas.MOVIE_DETAIL: (ctx) => PlaceDetailScreen()
+        //Rotas.MOVIE_DETAIL: (ctx) => MovieDetailScreen()
       
       },
       debugShowCheckedModeBanner: false,
