@@ -26,79 +26,63 @@ class FilmeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _selecionarFilme(context),
-      child: Container(
-        height: 167,
-        child: Card(
-          color: Color.fromARGB(255, 44, 44, 44),
-          margin: EdgeInsets.only(top: 15, left: 15, right: 15),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Image.asset(
-                    filme.imagem,
-                    width: 100,
-                    fit: BoxFit.cover,
-                  ),
-                  SizedBox(
-                    width: 20,
-                    height: 152,
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        // Add some spacing between the top of the card and the title
-                        SizedBox(height: 10),
-                        // Add a title widget
-                        Text(
-                          filme.titulo,
-                          // maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
+        onTap: () => _selecionarFilme(context),
+        child: Container(
+          height: 167,
+          child: Card(
+            color: Color.fromARGB(255, 44, 44, 44),
+            margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Image.asset(
+                  filme.imagem,
+                  width: 100,
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 10),
+                      Text(
+                        filme.titulo,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
-                        // Add some spacing between the title and the text
-                        SizedBox(height: 5),
-                        // Add a text widget to display some text
-                        Text(
+                      ),
+                      SizedBox(height: 5),
+                      Expanded(
+                        child: Text(
                           filme.descricao,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 4,
                           style: TextStyle(color: Colors.white),
                         ),
-                        Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.end, // Alinhamento à direita
-                          children: <Widget>[
-                            IconButton(
-                              onPressed: () {
-                                deleteFavorito();
-                              },
-                              icon: Icon(Icons.delete),
-                              color: Colors.red,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          IconButton(
+                            onPressed: () {
+                              deleteFavorito();
+                            },
+                            icon: Icon(Icons.delete),
+                            color: Colors.red,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
