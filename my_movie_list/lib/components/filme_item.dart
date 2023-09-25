@@ -47,9 +47,13 @@ class FilmeItem extends StatelessWidget {
                     width: 100,
                     fit: BoxFit.cover,
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(
+                    width: 20,
+                    height: 152,
+                  ),
                   Expanded(
                     child: Column(
+                      mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         // Add some spacing between the top of the card and the title
@@ -57,6 +61,8 @@ class FilmeItem extends StatelessWidget {
                         // Add a title widget
                         Text(
                           filme.titulo,
+                          // maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -65,9 +71,12 @@ class FilmeItem extends StatelessWidget {
                         // Add some spacing between the title and the text
                         SizedBox(height: 5),
                         // Add a text widget to display some text
-                        Text(filme.descricao,
-                            // overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.white)),
+                        Text(
+                          filme.descricao,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 4,
+                          style: TextStyle(color: Colors.white),
+                        ),
                         Row(
                           mainAxisAlignment:
                               MainAxisAlignment.end, // Alinhamento à direita
