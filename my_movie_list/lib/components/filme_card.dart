@@ -7,7 +7,7 @@ class FilmeCard extends StatelessWidget {
   const FilmeCard(this.filme);
 
   _detalheFilme(BuildContext context) {
-    Navigator.of(context).pushNamed('/movie-detail', arguments: filme);
+    Navigator.of(context).pushNamed('/comments', arguments: filme);
     // implementar a tela de detalhes do filme
   }
 

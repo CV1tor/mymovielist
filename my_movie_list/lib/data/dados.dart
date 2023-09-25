@@ -16,7 +16,8 @@ var FILMES = [
       "Animação", 
       "Ação", 
       "Aventura"
-    ]
+    ],
+    imagens: ['assets/images/guardians/guardians_1.jpg', 'assets/images/guardians/guardians_2.jpeg', 'assets/images/guardians/guardians_3.jpg', 'assets/images/guardians/guardians_4.jpg']
   ),
   Filme(
     titulo: "Barbie",
@@ -26,7 +27,8 @@ var FILMES = [
       "Aventura",
       "Comédia",
       "Fantasia"
-    ]
+    ],
+    imagens: ['assets/images/guardians/guardians_1.jpg', 'assets/images/guardians/guardians_2.jpeg', 'assets/images/guardians/guardians_3.jpg', 'assets/images/guardians/guardians_4.jpg']
   ),
   Filme(
     titulo: "Oppenheimer",
@@ -36,7 +38,8 @@ var FILMES = [
       "Biografia",
       "Drama",
       "História"
-    ]
+    ],
+    imagens: ['assets/images/guardians/guardians_1.jpg', 'assets/images/guardians/guardians_2.jpeg', 'assets/images/guardians/guardians_3.jpg', 'assets/images/guardians/guardians_4.jpg']
   ),
   Filme(
     titulo: "John Wick 4: Baba Yaga",
@@ -46,7 +49,9 @@ var FILMES = [
       "Ação",
       "Policial",
       "Suspense"
-    ]
+    ],
+    imagens: ['assets/images/guardians/guardians_1.jpg', 'assets/images/guardians/guardians_2.jpeg', 'assets/images/guardians/guardians_3.jpg', 'assets/images/guardians/guardians_4.jpg']
+
   ),
   Filme(
     titulo: "Guardiões da Galáxia Vol. 3",
@@ -56,7 +61,8 @@ var FILMES = [
       "Ação",
       "Aventura",
       "Comédia"
-    ]
+    ],
+    imagens: ['assets/images/guardians/guardians_1.jpg', 'assets/images/guardians/guardians_2.jpeg', 'assets/images/guardians/guardians_3.jpg', 'assets/images/guardians/guardians_4.jpg']
   ),
   Filme(
     titulo: "Pânico VI",
@@ -66,7 +72,8 @@ var FILMES = [
       "Terror",
       "Mistério",
       "Suspense"
-    ]
+    ],
+    imagens: ['assets/images/guardians/guardians_1.jpg', 'assets/images/guardians/guardians_2.jpeg', 'assets/images/guardians/guardians_3.jpg', 'assets/images/guardians/guardians_4.jpg']
   )
 ];
 
