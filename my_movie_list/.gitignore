@@ -6,6 +6,8 @@
 !assets/
 !assets/images/
 !assets/images/*
+!assets/icons/
+!assets/icons/*
 
 #Lib
 !lib/
