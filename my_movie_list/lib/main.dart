@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
       //home: CountriesScreen(),
       initialRoute: '/login',
       routes: {
-        Rotas.HOME: (ctx) => TabsScreen(),
+        Rotas.HOME: (ctx) => TabsScreen(filmesFavoritos: _filmesFavoritos),
         Rotas.LOGIN: (ctx) => LoginScreen(),
 
         //Rotas.MOVIE_DETAIL: (ctx) => MovieDetailScreen()
@@ -62,6 +62,8 @@ class _MyAppState extends State<MyApp> {
               toggleFavoritos: _toggleFavoritos,
               eFavorito: _eFavorito,
             ),
+        
+        
         //Rotas.MOVIE_DETAIL: (ctx) => PlaceDetailScreen()
       },
       debugShowCheckedModeBanner: false,

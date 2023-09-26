@@ -52,7 +52,7 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Image.asset(filme.imagem,
+            Image.asset(filme.banner,
                 height: 300, width: 400, fit: BoxFit.contain),
             Container(
               padding: EdgeInsets.all(12),
@@ -88,7 +88,6 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                                 size: 28,
                               ),
                               onPressed: () => widget.toggleFavoritos(filme)),
-                      
                     ),
                   ]),
                   Container(

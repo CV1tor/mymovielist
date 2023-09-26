@@ -22,7 +22,7 @@ class FilmeCard extends StatelessWidget {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Image(
-              image: AssetImage(filme.imagem),
+              image: AssetImage(filme.banner),
               fit: BoxFit.cover,
             ),
           ),

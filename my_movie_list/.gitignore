@@ -8,6 +8,18 @@
 !assets/images/*
 !assets/icons/
 !assets/icons/*
+!assets/guardians
+!assets/guardians/*
+!assets/oppenheimer
+!assets/oppenheimer/*
+!assets/spiderverse
+!assets/spiderverse/*
+!assets/barbie
+!assets/barbie/*
+!assets/john_wick
+!assets/john_wick/*
+!assets/scream_vi
+!assets/scream_vi/*
 
 #Lib
 !lib/
@@ -21,3 +33,4 @@
 #Arquivos de configuração
 !.gitignore
 !pubspec.yaml
+

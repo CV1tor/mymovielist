@@ -74,6 +74,22 @@ flutter:
     - assets/images/guardians/guardians_2.jpeg
     - assets/images/guardians/guardians_3.jpg
     - assets/images/guardians/guardians_4.jpg
+    - assets/images/spiderverse/spiderverse1.jpg
+    - assets/images/spiderverse/spiderverse2.jpg
+    - assets/images/spiderverse/spiderverse3.jpg
+    - assets/images/spiderverse/spiderverse4.jpg
+    - assets/images/barbie/barbie1.jpg
+    - assets/images/barbie/barbie2.jpg
+    - assets/images/barbie/barbie3.jpg
+    - assets/images/barbie/barbie4.jpg
+    - assets/images/oppenheimer/oppenheimer1.jpg
+    - assets/images/oppenheimer/oppenheimer2.jpg
+    - assets/images/oppenheimer/oppenheimer3.jpg
+    - assets/images/oppenheimer/oppenheimer4.jpg
+    - assets/images/scream_vi/scream1.jpg
+    - assets/images/scream_vi/scream2.jpg
+    - assets/images/john_wick/johnwick1.jpg
+    - assets/images/john_wick/johnwick2.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
