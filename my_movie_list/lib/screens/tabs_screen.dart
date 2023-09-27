@@ -6,7 +6,7 @@ import 'package:my_movie_list/screens/filmes_screen.dart';
 class TabsScreen extends StatefulWidget {
   final List<Filme> filmesFavoritos;
 
-  TabsScreen({ required this.filmesFavoritos});
+  TabsScreen({required this.filmesFavoritos});
 
   @override
   State<TabsScreen> createState() => _TabsScreenState();

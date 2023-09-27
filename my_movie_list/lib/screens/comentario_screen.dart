@@ -24,6 +24,9 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
   _cadastrarComentario(Comentario comentario) {
     setState(() {
       listaComentarios.add(comentario);
+      (ModalRoute.of(context)!.settings.arguments as Filme)
+          .comentarios
+          .add(comentario);
     });
     Navigator.of(context).pop();
   }
@@ -167,7 +170,7 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                   ),
                   SizedBox(height: 20),
                   Visibility(
-                    visible: listaComentarios.isNotEmpty,
+                    visible: filme.comentarios.isNotEmpty,
                     replacement: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -196,9 +199,9 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                         ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            itemCount: listaComentarios.length,
+                            itemCount: filme.comentarios.length,
                             itemBuilder: (context, index) {
-                              final comentarioAtual = listaComentarios[index];
+                              final comentarioAtual = filme.comentarios[index];
                               return Card(
                                 child: Container(
                                     child: MyCommentWidget(

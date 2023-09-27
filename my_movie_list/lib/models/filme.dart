@@ -7,7 +7,7 @@ class Filme {
 
   final List<String> genero;
   final List<String> imagens;
-  List<Comentario>?
+  List<Comentario>
       comentarios; // não necessariamente precisa ter comentários, por isso nullable
 
   Filme(
@@ -15,5 +15,6 @@ class Filme {
       required this.banner,
       required this.descricao,
       required this.genero,
-      required this.imagens});
+      required this.imagens,
+      required this.comentarios});
 }
