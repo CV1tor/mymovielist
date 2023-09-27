@@ -6,39 +6,36 @@ import 'package:my_movie_list/models/filme.dart';
 class FavoritosScreen extends StatefulWidget {
   final List<Filme> filmesFavoritos;
 
-  FavoritosScreen({required this.filmesFavoritos});
+  const FavoritosScreen({super.key, required this.filmesFavoritos});
 
   @override
   State<FavoritosScreen> createState() => _FavoritosScreenState();
 }
 
 class _FavoritosScreenState extends State<FavoritosScreen> {
-  // FavoritosScreen(this.filmesFavoritos);
-  // ALTERAR PARA RECEBER FILMESFAVORITOS POR PARÂMETRO
-
   Future<void> _excluirFilme(int index) async {
     bool confirmacao = await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Color.fromARGB(255, 44, 44, 44),
-          title: Text(
+          backgroundColor: const Color.fromARGB(255, 44, 44, 44),
+          title: const Text(
             'Confirmação',
             style: TextStyle(color: Colors.red),
           ),
-          content: Text(
+          content: const Text(
             'Tem certeza de que deseja remover esse filme dos favoritos?',
             style: TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancelar'),
+              child: const Text('Cancelar'),
               onPressed: () {
                 Navigator.of(context).pop(false); // Cancelar a exclusão
               },
             ),
             TextButton(
-              child: Text('Excluir'),
+              child: const Text('Excluir'),
               onPressed: () {
                 Navigator.of(context).pop(true); // Confirmar a exclusão
               },

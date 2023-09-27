@@ -2,13 +2,12 @@ import './comentario.dart';
 
 class Filme {
   final String titulo;
-  final String banner; // caminho da imagem nos arquivos
+  final String banner;
   final String descricao;
 
   final List<String> genero;
   final List<String> imagens;
-  List<Comentario>
-      comentarios; // não necessariamente precisa ter comentários, por isso nullable
+  List<Comentario> comentarios;
 
   Filme(
       {required this.titulo,

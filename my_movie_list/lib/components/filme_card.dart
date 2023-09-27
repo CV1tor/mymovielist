@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/models/filme.dart';
+import 'package:my_movie_list/utils/rotas.dart';
 
 class FilmeCard extends StatelessWidget {
   final Filme filme;
 
-  const FilmeCard(this.filme);
+  const FilmeCard(this.filme, {super.key});
 
   _detalheFilme(BuildContext context) {
-    Navigator.of(context).pushNamed('/comments', arguments: filme);
-    // implementar a tela de detalhes do filme
+    Navigator.of(context).pushNamed(Rotas.MOVIE_DETAIL, arguments: filme);
   }
 
   @override
@@ -16,7 +16,7 @@ class FilmeCard extends StatelessWidget {
     return InkResponse(
       onTap: () => _detalheFilme(context),
       child: Column(
-        children: [
+        children: <Widget>[
           Card(
             clipBehavior: Clip.antiAliasWithSaveLayer,
             shape:
@@ -29,11 +29,11 @@ class FilmeCard extends StatelessWidget {
           Text(
             filme.titulo,
             style:
-                TextStyle(color: Colors.white, overflow: TextOverflow.ellipsis),
+                const TextStyle(color: Colors.white, overflow: TextOverflow.ellipsis),
             softWrap: true,
             textAlign: TextAlign.center,
             textHeightBehavior:
-                TextHeightBehavior(applyHeightToFirstAscent: false),
+                const TextHeightBehavior(applyHeightToFirstAscent: false),
           ),
         ],
       ),

@@ -109,5 +109,3 @@ var FILMES = [
       ],
       comentarios: [])
 ];
-
-// Depois adicionar um database pros filmes

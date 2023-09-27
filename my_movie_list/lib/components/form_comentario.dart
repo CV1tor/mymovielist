@@ -3,7 +3,7 @@ import 'package:my_movie_list/models/comentario.dart';
 
 class FormComentario extends StatefulWidget {
   Function(Comentario) cadastrarComentario;
-  FormComentario({required this.cadastrarComentario});
+  FormComentario({super.key, required this.cadastrarComentario});
 
   @override
   State<FormComentario> createState() => _FormComentarioState();
@@ -15,13 +15,13 @@ class _FormComentarioState extends State<FormComentario> {
   String erroTitulo = "";
   String erroDescricao = "";
   _cadastrarComentario() {
-    if (_comentarioTitulo.text.length != 0 &&
-        _comentarioDescricao.text.length != 0) {
+    if (_comentarioTitulo.text.isNotEmpty &&
+        _comentarioDescricao.text.isNotEmpty) {
       Comentario comentario = Comentario(
           titulo: _comentarioTitulo.text, descricao: _comentarioDescricao.text);
       widget.cadastrarComentario(comentario);
     } else {
-      if (_comentarioTitulo.text.length == 0) {
+      if (_comentarioTitulo.text.isEmpty) {
         setState(() {
           erroTitulo = "Titulo do comentário não pode ficar vazio";
         });
@@ -30,7 +30,7 @@ class _FormComentarioState extends State<FormComentario> {
           erroTitulo = "";
         });
       }
-      if (_comentarioDescricao.text.length == 0) {
+      if (_comentarioDescricao.text.isEmpty) {
         setState(() {
           erroDescricao = "Descrição do comentário não pode ficar vazio";
         });
@@ -49,10 +49,10 @@ class _FormComentarioState extends State<FormComentario> {
       padding: EdgeInsets.fromLTRB(15, 15 , 15, MediaQuery.of(context).viewInsets.bottom ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           TextField(
             controller: _comentarioTitulo,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 border: UnderlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5))),
                 floatingLabelStyle: TextStyle(color: Colors.grey, fontSize: 18),
@@ -62,14 +62,14 @@ class _FormComentarioState extends State<FormComentario> {
           ),
           Text(
             erroTitulo,
-            style: TextStyle(color: Colors.red),
+            style: const TextStyle(color: Colors.red),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextField(
             controller: _comentarioDescricao,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 border: UnderlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5))),
                 floatingLabelStyle: TextStyle(color: Colors.grey, fontSize: 18),
@@ -81,20 +81,20 @@ class _FormComentarioState extends State<FormComentario> {
           ),
           Text(
             erroDescricao,
-            style: TextStyle(color: Colors.red),
+            style: const TextStyle(color: Colors.red),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.fromLTRB(0, 15, 0, 15)),
+                  padding: const EdgeInsets.fromLTRB(0, 15, 0, 15)),
               onPressed: () => {_cadastrarComentario()},
-              child: Text(
+              child: const Text(
                 "     Cadastrar comentário     ",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               )),
-          SizedBox(height: 20,)
+          const SizedBox(height: 20,)
         ],
       ),
     );

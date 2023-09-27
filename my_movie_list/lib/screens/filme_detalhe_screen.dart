@@ -6,20 +6,20 @@ import 'package:my_movie_list/models/filme.dart';
 
 import '../components/form_comentario.dart';
 
-class ComentarioScreen extends StatefulWidget {
+class FilmeDetalheScreen extends StatefulWidget {
   final Function(Filme) toggleFavoritos;
   final Function(Filme) eFavorito;
-  ComentarioScreen({
+  const FilmeDetalheScreen({
     super.key,
     required this.toggleFavoritos,
     required this.eFavorito,
   });
 
   @override
-  State<ComentarioScreen> createState() => _ComentarioScreenState();
+  State<FilmeDetalheScreen> createState() => _FilmeDetalheScreenState();
 }
 
-class _ComentarioScreenState extends State<ComentarioScreen> {
+class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
   List<Comentario> listaComentarios = [];
   _cadastrarComentario(Comentario comentario) {
     setState(() {
@@ -58,26 +58,24 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
             Image.asset(filme.banner,
                 height: 300, width: 400, fit: BoxFit.contain),
             Container(
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               child: Column(
-                children: [
+                children: <Widget>[
                   Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                     InkWell(
                       child: IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.mode_comment_outlined,
                           color: Colors.white,
                           size: 28,
                         ),
                         onPressed: _abraTelaDeComentario,
                       ),
-
-                      // onTap: _abrirFormularioComentario(context),
                     ),
                     InkWell(
                       child: widget.eFavorito(filme)
                           ? IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.favorite,
                                 color: Colors.red,
                                 size: 28,
@@ -85,7 +83,7 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                               onPressed: () => widget.toggleFavoritos(filme),
                             )
                           : IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.favorite_outline,
                                 color: Colors.white,
                                 size: 28,
@@ -104,7 +102,7 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                           itemBuilder: (context, index) {
                             final generoTipo = filme.genero[index];
                             return Padding(
-                              padding: EdgeInsets.only(right: 15),
+                              padding: const EdgeInsets.only(right: 15),
                               child: TagGenero(genero: generoTipo),
                             );
                           }),
@@ -113,15 +111,16 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                   const SizedBox(height: 16),
                   Text(
                     filme.descricao,
-                    style: TextStyle(color: Colors.white, fontSize: 15),
+                    style: const TextStyle(color: Colors.white, fontSize: 15),
                   ),
                   const SizedBox(height: 16),
                   Row(
                     children: [
                       Expanded(
                           child: Container(
-                        color: Color.fromRGBO(255, 255, 255, 0.1),
-                        child: Text(
+                        color: const Color.fromRGBO(255, 255, 255, 0.1),
+                        padding: const EdgeInsets.all(7),
+                        child: const Text(
                           "Imagens",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -129,11 +128,10 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                               color: Colors.white),
                           textAlign: TextAlign.center,
                         ),
-                        padding: EdgeInsets.all(7),
                       )),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -146,7 +144,7 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                         itemBuilder: (context, index) {
                           final imagem = filme.imagens[index];
                           return Padding(
-                            padding: EdgeInsets.only(right: 15),
+                            padding: const EdgeInsets.only(right: 15),
                             child: Image.asset(imagem),
                           );
                         }),
@@ -155,8 +153,9 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                     children: [
                       Expanded(
                           child: Container(
-                        color: Color.fromRGBO(255, 255, 255, 0.1),
-                        child: Text(
+                        color: const Color.fromRGBO(255, 255, 255, 0.1),
+                        padding: const EdgeInsets.all(7),
+                        child: const Text(
                           "Comentários",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -164,29 +163,28 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                               color: Colors.white),
                           textAlign: TextAlign.center,
                         ),
-                        padding: EdgeInsets.all(7),
                       )),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Visibility(
                     visible: filme.comentarios.isNotEmpty,
                     replacement: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Nenhum comentário",
                             style: TextStyle(color: Colors.blue),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.all(15)),
+                                  padding: const EdgeInsets.all(15)),
                               onPressed: () => {_abraTelaDeComentario()},
-                              child: Text(
+                              child: const Text(
                                 "Comentar",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 14),
@@ -198,7 +196,7 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                       children: [
                         ListView.builder(
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemCount: filme.comentarios.length,
                             itemBuilder: (context, index) {
                               final comentarioAtual = filme.comentarios[index];
@@ -210,9 +208,9 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                             }),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.all(15)),
+                                padding: const EdgeInsets.all(15)),
                             onPressed: () => {_abraTelaDeComentario()},
-                            child: Text(
+                            child: const Text(
                               "Comentar",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14),
