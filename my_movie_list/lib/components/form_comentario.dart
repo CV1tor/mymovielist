@@ -14,7 +14,7 @@ class _FormComentarioState extends State<FormComentario> {
   final _comentarioDescricao = TextEditingController();
   String erroTitulo = "";
   String erroDescricao = "";
-  _cadastrarTarefa() {
+  _cadastrarComentario() {
     if (_comentarioTitulo.text.length != 0 &&
         _comentarioDescricao.text.length != 0) {
       Comentario comentario = Comentario(
@@ -89,7 +89,7 @@ class _FormComentarioState extends State<FormComentario> {
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 15)),
-              onPressed: () => {_cadastrarTarefa()},
+              onPressed: () => {_cadastrarComentario()},
               child: Text(
                 "     Cadastrar comentário     ",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
