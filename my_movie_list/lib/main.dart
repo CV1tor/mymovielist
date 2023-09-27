@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/models/filme.dart';
-import 'package:my_movie_list/screens/comentario_screen.dart';
+import 'package:my_movie_list/screens/filme_detalhe_screen.dart';
 import 'package:my_movie_list/screens/login_screen.dart';
 import 'package:my_movie_list/screens/tabs_screen.dart';
 import 'package:my_movie_list/utils/rotas.dart';
@@ -50,21 +50,14 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
       ),
-      //home: CountriesScreen(),
       initialRoute: '/login',
       routes: {
         Rotas.HOME: (ctx) => TabsScreen(filmesFavoritos: _filmesFavoritos),
         Rotas.LOGIN: (ctx) => LoginScreen(),
-
-        //Rotas.MOVIE_DETAIL: (ctx) => MovieDetailScreen()
-
-        Rotas.COMMENT: (ctx) => ComentarioScreen(
+        Rotas.MOVIE_DETAIL: (ctx) => FilmeDetalheScreen(
               toggleFavoritos: _toggleFavoritos,
               eFavorito: _eFavorito,
             ),
-        
-        
-        //Rotas.MOVIE_DETAIL: (ctx) => PlaceDetailScreen()
       },
       debugShowCheckedModeBanner: false,
     );

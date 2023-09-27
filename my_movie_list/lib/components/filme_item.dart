@@ -14,9 +14,9 @@ class FilmeItem extends StatelessWidget {
   void _selecionarFilme(BuildContext context) {
     Navigator.of(context)
         .pushNamed(
-          Rotas.COMMENT, //ARRUMAR A ROTA PARA ENTRAR NOS DETALHES DO FILME
+          Rotas.MOVIE_DETAIL,
           arguments:
-              filme, //passar um map com chave valor para passar mais de um argumento
+              filme,
         )
         .then((value) => {
               if (value == null) {} else {print(value)}
@@ -30,8 +30,8 @@ class FilmeItem extends StatelessWidget {
         child: Container(
           height: 167,
           child: Card(
-            color: Color.fromARGB(255, 44, 44, 44),
-            margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+            color: const Color.fromARGB(255, 44, 44, 44),
+            margin: const EdgeInsets.only(top: 15, left: 15, right: 15),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
             ),
@@ -44,25 +44,25 @@ class FilmeItem extends StatelessWidget {
                   width: 100,
                   fit: BoxFit.cover,
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
                         filme.titulo,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             overflow: TextOverflow.ellipsis),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Expanded(
                         child: Text(
                           filme.descricao,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -74,7 +74,7 @@ class FilmeItem extends StatelessWidget {
                             onPressed: () {
                               deleteFavorito();
                             },
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                             color: Colors.red,
                           ),
                         ],
@@ -85,6 +85,7 @@ class FilmeItem extends StatelessWidget {
               ],
             ),
           ),
-        ));
+        )
+      );
   }
 }
