@@ -18,7 +18,9 @@ class _FormComentarioState extends State<FormComentario> {
     if (_comentarioTitulo.text.isNotEmpty &&
         _comentarioDescricao.text.isNotEmpty) {
       Comentario comentario = Comentario(
-          titulo: _comentarioTitulo.text, descricao: _comentarioDescricao.text);
+          titulo: _comentarioTitulo.text,
+          descricao: _comentarioDescricao.text,
+          data: DateTime.now());
       widget.cadastrarComentario(comentario);
     } else {
       if (_comentarioTitulo.text.isEmpty) {
@@ -45,8 +47,8 @@ class _FormComentarioState extends State<FormComentario> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      
-      padding: EdgeInsets.fromLTRB(15, 15 , 15, MediaQuery.of(context).viewInsets.bottom ),
+      padding: EdgeInsets.fromLTRB(
+          15, 15, 15, MediaQuery.of(context).viewInsets.bottom),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -94,7 +96,9 @@ class _FormComentarioState extends State<FormComentario> {
                 "     Cadastrar comentário     ",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               )),
-          const SizedBox(height: 20,)
+          const SizedBox(
+            height: 20,
+          )
         ],
       ),
     );

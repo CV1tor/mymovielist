@@ -37,14 +37,11 @@ class _LoginScreenState extends State<LoginScreen> {
   _login(BuildContext context) {
     if (_autenticacao()) {
       Navigator.of(context).pushNamed('/');
-    }
-    else {
+    } else {
       setState(() {
-      _erro = "Usuário ou senha incorretos!";
-    });
+        _erro = "Usuário ou senha incorretos!";
+      });
     }
-
-    
   }
 
   @override
@@ -92,9 +89,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       prefixIconColor: Colors.grey,
                       fillColor: Colors.white),
                 ),
-                
                 SizedBox(height: 10),
-                Text(_erro, style: TextStyle(color: Colors.red[700]),),
+                Text(
+                  _erro,
+                  style: TextStyle(color: Colors.red[700]),
+                ),
                 SizedBox(height: 5),
                 Row(
                   children: [

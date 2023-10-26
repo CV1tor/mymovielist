@@ -55,7 +55,7 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Image.asset(filme.banner,
+            Image.network(filme.banner,
                 height: 300, width: 400, fit: BoxFit.contain),
             Container(
               padding: const EdgeInsets.all(12),
@@ -145,7 +145,7 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                           final imagem = filme.imagens[index];
                           return Padding(
                             padding: const EdgeInsets.only(right: 15),
-                            child: Image.asset(imagem),
+                            child: Image.network(imagem),
                           );
                         }),
                   ),

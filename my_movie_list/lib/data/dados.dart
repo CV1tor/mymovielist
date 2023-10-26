@@ -3,12 +3,14 @@ import 'package:my_movie_list/models/comentario.dart';
 import '../models/usuario.dart';
 import '../models/filme.dart';
 
-const USUARIOS_CADASTRADOS = [
+final USUARIOS_CADASTRADOS = [
   Usuario(nome: "John Doe", senha: "123"),
   Usuario(nome: "Peter Parker", senha: "spiderman101"),
   Usuario(nome: "Luke Skywalker", senha: "jedi123")
 ];
-List<Comentario> c = [Comentario(titulo: "titulo", descricao: "descricao")];
+List<Comentario> c = [
+  Comentario(titulo: "titulo", descricao: "descricao", data: DateTime.now())
+];
 var FILMES = [
   Filme(
       titulo: "Homem-Aranha: Através do Aranhaverso",

@@ -22,14 +22,14 @@ class FilmeCard extends StatelessWidget {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Image(
-              image: AssetImage(filme.banner),
+              image: NetworkImage(filme.banner),
               fit: BoxFit.cover,
             ),
           ),
           Text(
             filme.titulo,
-            style:
-                const TextStyle(color: Colors.white, overflow: TextOverflow.ellipsis),
+            style: const TextStyle(
+                color: Colors.white, overflow: TextOverflow.ellipsis),
             softWrap: true,
             textAlign: TextAlign.center,
             textHeightBehavior:

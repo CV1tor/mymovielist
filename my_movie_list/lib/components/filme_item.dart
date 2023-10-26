@@ -15,8 +15,7 @@ class FilmeItem extends StatelessWidget {
     Navigator.of(context)
         .pushNamed(
           Rotas.MOVIE_DETAIL,
-          arguments:
-              filme,
+          arguments: filme,
         )
         .then((value) => {
               if (value == null) {} else {print(value)}
@@ -39,7 +38,7 @@ class FilmeItem extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Image.asset(
+                Image.network(
                   filme.banner,
                   width: 100,
                   fit: BoxFit.cover,
@@ -85,7 +84,6 @@ class FilmeItem extends StatelessWidget {
               ],
             ),
           ),
-        )
-      );
+        ));
   }
 }
