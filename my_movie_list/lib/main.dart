@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:my_movie_list/models/favoritos_provider.dart';
 import 'package:my_movie_list/models/filme.dart';
 import 'package:my_movie_list/screens/filme_detalhe_screen.dart';
 import 'package:my_movie_list/screens/login_screen.dart';
 import 'package:my_movie_list/screens/tabs_screen.dart';
 import 'package:my_movie_list/utils/rotas.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => FavoritoProviderModel())
+      ],
+      child: MyApp(),
+    ));
 
 class MyApp extends StatefulWidget {
   @override
@@ -20,12 +27,10 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         _filmesFavoritos.remove(filme);
       });
-      
     } else {
       setState(() {
         _filmesFavoritos.add(filme);
       });
-      
     }
   }
 

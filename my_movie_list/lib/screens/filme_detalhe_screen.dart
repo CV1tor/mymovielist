@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:my_movie_list/components/comentario_widget.dart';
 import 'package:my_movie_list/components/tag_genero.dart';
 import 'package:my_movie_list/models/comentario.dart';
+import 'package:my_movie_list/models/favoritos_provider.dart';
 import 'package:my_movie_list/models/filme.dart';
+import 'package:provider/provider.dart';
 
 import '../components/form_comentario.dart';
 
@@ -73,14 +75,18 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                       ),
                     ),
                     InkWell(
-                      child: widget.eFavorito(filme)
+                      child: Provider.of<FavoritoProviderModel>(context)
+                              .eFavorito(filme)
                           ? IconButton(
                               icon: const Icon(
                                 Icons.favorite,
                                 color: Colors.red,
                                 size: 28,
                               ),
-                              onPressed: () => widget.toggleFavoritos(filme),
+                              onPressed: () =>
+                                  Provider.of<FavoritoProviderModel>(context,
+                                          listen: false)
+                                      .toggleFavoritos(filme),
                             )
                           : IconButton(
                               icon: const Icon(
@@ -88,7 +94,10 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                                 color: Colors.white,
                                 size: 28,
                               ),
-                              onPressed: () => widget.toggleFavoritos(filme)),
+                              onPressed: () =>
+                                  Provider.of<FavoritoProviderModel>(context,
+                                          listen: false)
+                                      .toggleFavoritos(filme)),
                     ),
                   ]),
                   Container(
