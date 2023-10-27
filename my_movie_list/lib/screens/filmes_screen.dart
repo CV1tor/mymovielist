@@ -12,21 +12,15 @@ class FilmesScreen extends StatelessWidget {
       Uri.parse(
           'https://projeto-un2-mobile-default-rtdb.firebaseio.com/filmes.json'),
     );
-    print('RESPONSE CODE\n${response.statusCode}');
+
     if (response.statusCode == 200) {
-      print('RESPONSE BODY\n${response.body}');
-      final List<dynamic> jsonData = json.decode(response.body);
-      print('JSON DATA${jsonData}');
+      List<dynamic> body = json.decode(response.body);
       final List<Filme> filmes = [];
-      int i = 0;
-      for (var filmeData in jsonData) {
-        print('I\n ${i}');
-        print('FILMEDATA FOR\n ${filmeData}');
-        final filme = Filme.fromJson(filmeData);
-        print('FILME FOR\n ${filme}');
+
+      body.forEach((value) {
+        final filme = Filme.fromJson(value);
         filmes.add(filme);
-        i++;
-      }
+      });
 
       return filmes;
     } else {
@@ -40,12 +34,15 @@ class FilmesScreen extends StatelessWidget {
       body: FutureBuilder<List<Filme>>(
         future: carregarFilmes(),
         builder: (context, snapshot) {
+          print(snapshot.data);
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           } else if (snapshot.hasError) {
+             print(snapshot.error);
             return Text('Erro ao carregar os filmes: ${snapshot.error}');
           } else {
             final filmes = snapshot.data;
+            print('snapshot\n ${filmes?.first.titulo}');
 
             return SizedBox(
               height: MediaQuery.of(context).size.height * 0.93,

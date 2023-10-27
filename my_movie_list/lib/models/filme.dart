@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import './comentario.dart';
 
 class Filme {
@@ -17,13 +19,16 @@ class Filme {
       required this.comentarios});
 
   factory Filme.fromJson(Map<String, dynamic> json) {
+    List comentarios = json['comentarios'].toString().isNotEmpty ? json['comentarios'] : [] ;
+    List<Comentario> comentariosFormatados = comentarios.map((comentario) => Comentario.fromJson(comentario)).toList();
+   
     return Filme(
       titulo: json['titulo'],
       banner: json['banner'],
       descricao: json['descricao'],
       genero: List<String>.from(json['genero']),
       imagens: List<String>.from(json['imagens']),
-      comentarios: [], // Você pode inicializar os comentários de acordo com sua lógica
+      comentarios: comentariosFormatados,
     );
   }
 }

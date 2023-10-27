@@ -47,6 +47,8 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
   @override
   Widget build(BuildContext context) {
     final filme = ModalRoute.of(context)!.settings.arguments as Filme;
+    print('comentário');
+    print(filme.comentarios);
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 20,

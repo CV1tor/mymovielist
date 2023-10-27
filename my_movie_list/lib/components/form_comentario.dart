@@ -20,6 +20,7 @@ class _FormComentarioState extends State<FormComentario> {
       Comentario comentario = Comentario(
           titulo: _comentarioTitulo.text,
           descricao: _comentarioDescricao.text,
+          // idUsuario: '1',
           data: DateTime.now());
       widget.cadastrarComentario(comentario);
     } else {
