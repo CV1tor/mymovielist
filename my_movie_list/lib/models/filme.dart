@@ -19,8 +19,15 @@ class Filme {
       required this.comentarios});
 
   factory Filme.fromJson(Map<String, dynamic> json) {
-    List comentarios = json['comentarios'].toString().isNotEmpty ? json['comentarios'] : [] ;
-    List<Comentario> comentariosFormatados = comentarios.map((comentario) => Comentario.fromJson(comentario)).toList();
+    List<Comentario> comentariosFormatados = [];
+
+    if (json['comentarios'].toString().isNotEmpty) {
+      Map<String, dynamic> comentarios = json['comentarios'];
+      
+      comentarios.forEach((key, comentario) {
+        comentariosFormatados.add(Comentario.fromJson(comentario));
+      });
+    }
    
     return Filme(
       titulo: json['titulo'],

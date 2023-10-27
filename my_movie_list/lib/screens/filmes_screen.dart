@@ -1,38 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/components/filme_card.dart';
+import 'package:my_movie_list/context/filme.dart';
 import 'package:my_movie_list/data/dados.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'dart:convert';
 
 import '../models/filme.dart';
 
 class FilmesScreen extends StatelessWidget {
-  Future<List<Filme>> carregarFilmes() async {
-    final response = await http.get(
-      Uri.parse(
-          'https://projeto-un2-mobile-default-rtdb.firebaseio.com/filmes.json'),
-    );
+  // Future<List<Filme>> carregarFilmes() async {
+  //   final response = await http.get(
+  //     Uri.parse(
+  //         'https://projeto-un2-mobile-default-rtdb.firebaseio.com/filmes.json'),
+  //   );
 
-    if (response.statusCode == 200) {
-      List<dynamic> body = json.decode(response.body);
-      final List<Filme> filmes = [];
+  //   if (response.statusCode == 200) {
+  //     List<dynamic> body = json.decode(response.body);
+  //     final List<Filme> filmes = [];
 
-      body.forEach((value) {
-        final filme = Filme.fromJson(value);
-        filmes.add(filme);
-      });
+  //     body.forEach((value) {
+  //       final filme = Filme.fromJson(value);
+  //       filmes.add(filme);
+  //     });
 
-      return filmes;
-    } else {
-      throw Exception('Failed to load filmes');
-    }
-  }
+  //     return filmes;
+  //   } else {
+  //     throw Exception('Failed to load filmes');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final filmes = Provider.of<FilmeContext>(
+      context,
+      listen: false,
+    );
+    
     return Scaffold(
       body: FutureBuilder<List<Filme>>(
-        future: carregarFilmes(),
+        future: filmes.carregarFilmes(),
         builder: (context, snapshot) {
           print(snapshot.data);
           if (snapshot.connectionState == ConnectionState.waiting) {

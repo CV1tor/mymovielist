@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_movie_list/context/filme.dart';
 import 'package:my_movie_list/models/comentario.dart';
+import 'package:provider/provider.dart';
 
 class FormComentario extends StatefulWidget {
   Function(Comentario) cadastrarComentario;
@@ -14,14 +16,15 @@ class _FormComentarioState extends State<FormComentario> {
   final _comentarioDescricao = TextEditingController();
   String erroTitulo = "";
   String erroDescricao = "";
-  _cadastrarComentario() {
+  _cadastrarComentario(FilmeContext filme) {
     if (_comentarioTitulo.text.isNotEmpty &&
         _comentarioDescricao.text.isNotEmpty) {
       Comentario comentario = Comentario(
           titulo: _comentarioTitulo.text,
           descricao: _comentarioDescricao.text,
-          // idUsuario: '1',
+          idUsuario: '1',
           data: DateTime.now());
+      filme.adicionarComentario(comentario);
       widget.cadastrarComentario(comentario);
     } else {
       if (_comentarioTitulo.text.isEmpty) {
@@ -47,6 +50,11 @@ class _FormComentarioState extends State<FormComentario> {
 
   @override
   Widget build(BuildContext context) {
+    final filmes = Provider.of<FilmeContext>(
+      context,
+      listen: false,
+    );
+
     return Container(
       padding: EdgeInsets.fromLTRB(
           15, 15, 15, MediaQuery.of(context).viewInsets.bottom),
@@ -92,7 +100,7 @@ class _FormComentarioState extends State<FormComentario> {
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.fromLTRB(0, 15, 0, 15)),
-              onPressed: () => {_cadastrarComentario()},
+              onPressed: () => {_cadastrarComentario(filmes)},
               child: const Text(
                 "     Cadastrar comentário     ",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
