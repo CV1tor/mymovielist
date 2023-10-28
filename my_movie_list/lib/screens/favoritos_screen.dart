@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/components/filme_item.dart';
 import 'package:my_movie_list/data/dados.dart';
+import 'package:my_movie_list/models/favoritos_provider.dart';
 import 'package:my_movie_list/models/filme.dart';
+import 'package:provider/provider.dart';
 
 class FavoritosScreen extends StatefulWidget {
   final List<Filme> filmesFavoritos;
@@ -54,17 +56,23 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.filmesFavoritos.isEmpty) {
-      return const Center(child: Text('Nenhum Filme Marcado como Favorito!'));
-    } else {
-      return ListView.builder(
-        itemCount: widget.filmesFavoritos.length,
-        itemBuilder: (ctx, index) {
-          final filme = widget.filmesFavoritos[index];
-          return FilmeItem(
-              filme: filme, deleteFavorito: () => _excluirFilme(index));
-        },
-      );
-    }
+    return Consumer<FavoritoProviderModel>(
+      builder: (context, favoritos, child) {
+        if (favoritos.filmesFavoritos.isEmpty) {
+          return const Center(
+              child: Text('Nenhum Filme Marcado como Favorito!'));
+        } else {
+          return ListView.builder(
+            itemCount: favoritos.filmesFavoritos.length,
+            itemBuilder: (ctx, index) {
+              final filme = favoritos.filmesFavoritos[index];
+              return FilmeItem(
+                  filme: filme,
+                  deleteFavorito: () => favoritos.toggleFavoritos(filme));
+            },
+          );
+        }
+      },
+    );
   }
 }

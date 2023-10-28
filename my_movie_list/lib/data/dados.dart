@@ -3,14 +3,18 @@ import 'package:my_movie_list/models/comentario.dart';
 import '../models/usuario.dart';
 import '../models/filme.dart';
 
-const USUARIOS_CADASTRADOS = [
+final USUARIOS_CADASTRADOS = [
   Usuario(nome: "John Doe", senha: "123"),
   Usuario(nome: "Peter Parker", senha: "spiderman101"),
   Usuario(nome: "Luke Skywalker", senha: "jedi123")
 ];
-List<Comentario> c = [Comentario(titulo: "titulo", descricao: "descricao")];
+List<Comentario> c = [
+  // Comentario(titulo: "titulo", descricao: "descricao", data: DateTime.now())
+  Comentario(titulo: "titulo", descricao: "descricao", idUsuario: '1', data: DateTime.now())
+];
 var FILMES = [
   Filme(
+      id: '0',
       titulo: "Homem-Aranha: Através do Aranhaverso",
       descricao:
           "Miles Morales, o amigão da vizinhança Homem-Aranha, é transporado através do multiverso para unir forças com Gwen Stacy e um novo time de Pessoas-Aranha para enfrentar um vilão mais poderoso.",
@@ -28,6 +32,7 @@ var FILMES = [
       ],
       comentarios: []),
   Filme(
+      id: '1',
       titulo: "Barbie",
       descricao:
           "Viver na Terra da Barbie é ser um ser perfeito em um lugar perfeito. A menos que você tenha uma crise existencial completa. Ou que você seja um Ken.",
@@ -45,6 +50,7 @@ var FILMES = [
       ],
       comentarios: []),
   Filme(
+      id: '2',
       titulo: "Oppenheimer",
       descricao:
           "A história do cientista americano J. Robert Oppenheimer e o seu papel no desenvolvimento da bomba atômica.",
@@ -62,6 +68,7 @@ var FILMES = [
       ],
       comentarios: []),
   Filme(
+      id: '3',
       titulo: "John Wick 4: Baba Yaga",
       descricao:
           "John Wick descobre um modo para derrotar a Alta Cúpula. Mas, antes que possa conquistar a sua liberdade, Wick deve enfrentar um novo inimigo com alianças poderosas no mundo todo.",
@@ -77,6 +84,7 @@ var FILMES = [
       ],
       comentarios: []),
   Filme(
+      id: '4',
       titulo: "Guardiões da Galáxia Vol. 3",
       descricao:
           "Após a perda de Gamora, Peter Quill ainda está chateado e deve reunir os Guardiões da Galáxia em uma missão para defender o universo e proteger Rocket.",
@@ -94,6 +102,7 @@ var FILMES = [
       ],
       comentarios: []),
   Filme(
+      id: '5',
       titulo: "Pânico VI",
       descricao:
           "Os sobreviventes dos assassinatos de Ghostface deixam Woodsboro para trás e iniciam um novo capítulo na cidade de Nova York.",

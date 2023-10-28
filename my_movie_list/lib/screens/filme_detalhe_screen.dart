@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:my_movie_list/components/comentario_widget.dart';
 import 'package:my_movie_list/components/tag_genero.dart';
 import 'package:my_movie_list/models/comentario.dart';
+import 'package:my_movie_list/models/favoritos_provider.dart';
 import 'package:my_movie_list/models/filme.dart';
+import 'package:provider/provider.dart';
 
 import '../components/form_comentario.dart';
 
@@ -31,13 +33,14 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
     Navigator.of(context).pop();
   }
 
-  _abraTelaDeComentario() {
+  _abraTelaDeComentario(Filme filme) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         builder: (_) {
           return FormComentario(
             cadastrarComentario: _cadastrarComentario,
+            filmeModel: filme,
           );
         });
   }
@@ -45,6 +48,8 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
   @override
   Widget build(BuildContext context) {
     final filme = ModalRoute.of(context)!.settings.arguments as Filme;
+    print('comentário');
+    print(filme.comentarios);
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 20,
@@ -55,7 +60,7 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Image.asset(filme.banner,
+            Image.network(filme.banner,
                 height: 300, width: 400, fit: BoxFit.contain),
             Container(
               padding: const EdgeInsets.all(12),
@@ -69,18 +74,22 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                           color: Colors.white,
                           size: 28,
                         ),
-                        onPressed: _abraTelaDeComentario,
+                        onPressed: () => _abraTelaDeComentario(filme),
                       ),
                     ),
                     InkWell(
-                      child: widget.eFavorito(filme)
+                      child: Provider.of<FavoritoProviderModel>(context)
+                              .eFavorito(filme)
                           ? IconButton(
                               icon: const Icon(
                                 Icons.favorite,
                                 color: Colors.red,
                                 size: 28,
                               ),
-                              onPressed: () => widget.toggleFavoritos(filme),
+                              onPressed: () =>
+                                  Provider.of<FavoritoProviderModel>(context,
+                                          listen: false)
+                                      .toggleFavoritos(filme),
                             )
                           : IconButton(
                               icon: const Icon(
@@ -88,7 +97,10 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                                 color: Colors.white,
                                 size: 28,
                               ),
-                              onPressed: () => widget.toggleFavoritos(filme)),
+                              onPressed: () =>
+                                  Provider.of<FavoritoProviderModel>(context,
+                                          listen: false)
+                                      .toggleFavoritos(filme)),
                     ),
                   ]),
                   Container(
@@ -145,7 +157,7 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                           final imagem = filme.imagens[index];
                           return Padding(
                             padding: const EdgeInsets.only(right: 15),
-                            child: Image.asset(imagem),
+                            child: Image.network(imagem),
                           );
                         }),
                   ),
@@ -183,7 +195,7 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                           ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   padding: const EdgeInsets.all(15)),
-                              onPressed: () => {_abraTelaDeComentario()},
+                              onPressed: () => _abraTelaDeComentario(filme),
                               child: const Text(
                                 "Comentar",
                                 style: TextStyle(
@@ -203,13 +215,15 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                               return Card(
                                 child: Container(
                                     child: MyCommentWidget(
-                                        comentario: comentarioAtual)),
+                                        comentario: comentarioAtual,
+                                        filmeModels: filme,
+                                      )),
                               );
                             }),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.all(15)),
-                            onPressed: () => {_abraTelaDeComentario()},
+                            onPressed: () => _abraTelaDeComentario(filme),
                             child: const Text(
                               "Comentar",
                               style: TextStyle(

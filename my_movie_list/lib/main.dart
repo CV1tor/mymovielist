@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:my_movie_list/context/filme.dart';
+import 'package:my_movie_list/models/favoritos_provider.dart';
 import 'package:my_movie_list/models/filme.dart';
 import 'package:my_movie_list/screens/filme_detalhe_screen.dart';
 import 'package:my_movie_list/screens/login_screen.dart';
 import 'package:my_movie_list/screens/tabs_screen.dart';
 import 'package:my_movie_list/utils/rotas.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => FavoritoProviderModel())
+      ],
+      child: MyApp(),
+    ));
 
 class MyApp extends StatefulWidget {
   @override
@@ -20,12 +28,10 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         _filmesFavoritos.remove(filme);
       });
-      
     } else {
       setState(() {
         _filmesFavoritos.add(filme);
       });
-      
     }
   }
 
@@ -35,31 +41,37 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MyMovieList',
-      theme: ThemeData(
-        colorScheme: ThemeData()
-            .colorScheme
-            .copyWith(primary: Colors.red, secondary: Colors.white),
-        fontFamily: 'Raleway',
-        canvasColor: Colors.black,
-        textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: TextStyle(
-                fontSize: 20,
-                fontFamily: 'RobotoCondensed',
+    return MultiProvider(
+      providers: [
+        ListenableProvider(create: (context) => FilmeContext()),
+      ],
+      child: MaterialApp(
+        title: 'MyMovieList',
+        theme: ThemeData(
+          colorScheme: ThemeData()
+              .colorScheme
+              .copyWith(primary: Colors.red, secondary: Colors.white),
+          fontFamily: 'Raleway',
+          canvasColor: Colors.black,
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'RobotoCondensed',
+                ),
               ),
-            ),
+        ),
+        // initialRoute: '/login',
+        initialRoute: '/',
+        routes: {
+          Rotas.HOME: (ctx) => TabsScreen(filmesFavoritos: _filmesFavoritos),
+          Rotas.LOGIN: (ctx) => LoginScreen(),
+          Rotas.MOVIE_DETAIL: (ctx) => FilmeDetalheScreen(
+                toggleFavoritos: _toggleFavoritos,
+                eFavorito: _eFavorito,
+              ),
+        },
+        debugShowCheckedModeBanner: false,
       ),
-      initialRoute: '/login',
-      routes: {
-        Rotas.HOME: (ctx) => TabsScreen(filmesFavoritos: _filmesFavoritos),
-        Rotas.LOGIN: (ctx) => LoginScreen(),
-        Rotas.MOVIE_DETAIL: (ctx) => FilmeDetalheScreen(
-              toggleFavoritos: _toggleFavoritos,
-              eFavorito: _eFavorito,
-            ),
-      },
-      debugShowCheckedModeBanner: false,
     );
   }
 }
