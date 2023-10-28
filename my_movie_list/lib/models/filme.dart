@@ -3,6 +3,7 @@ import 'dart:convert';
 import './comentario.dart';
 
 class Filme {
+  final String id;
   final String titulo;
   final String banner;
   final String descricao;
@@ -11,14 +12,15 @@ class Filme {
   List<Comentario> comentarios;
 
   Filme(
-      {required this.titulo,
+      {required this.id,
+      required this.titulo,
       required this.banner,
       required this.descricao,
       required this.genero,
       required this.imagens,
       required this.comentarios});
 
-  factory Filme.fromJson(Map<String, dynamic> json) {
+  factory Filme.fromJson(Map<String, dynamic> json, int id) {
     List<Comentario> comentariosFormatados = [];
 
     if (json['comentarios'].toString().isNotEmpty) {
@@ -30,6 +32,7 @@ class Filme {
     }
    
     return Filme(
+      id: id.toString(),
       titulo: json['titulo'],
       banner: json['banner'],
       descricao: json['descricao'],

@@ -33,13 +33,14 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
     Navigator.of(context).pop();
   }
 
-  _abraTelaDeComentario() {
+  _abraTelaDeComentario(Filme filme) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         builder: (_) {
           return FormComentario(
             cadastrarComentario: _cadastrarComentario,
+            filmeModel: filme,
           );
         });
   }
@@ -73,7 +74,7 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                           color: Colors.white,
                           size: 28,
                         ),
-                        onPressed: _abraTelaDeComentario,
+                        onPressed: () => _abraTelaDeComentario(filme),
                       ),
                     ),
                     InkWell(
@@ -194,7 +195,7 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                           ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   padding: const EdgeInsets.all(15)),
-                              onPressed: () => {_abraTelaDeComentario()},
+                              onPressed: () => _abraTelaDeComentario(filme),
                               child: const Text(
                                 "Comentar",
                                 style: TextStyle(
@@ -214,13 +215,15 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                               return Card(
                                 child: Container(
                                     child: MyCommentWidget(
-                                        comentario: comentarioAtual)),
+                                        comentario: comentarioAtual,
+                                        filmeModels: filme,
+                                      )),
                               );
                             }),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.all(15)),
-                            onPressed: () => {_abraTelaDeComentario()},
+                            onPressed: () => _abraTelaDeComentario(filme),
                             child: const Text(
                               "Comentar",
                               style: TextStyle(

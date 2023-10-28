@@ -6,7 +6,6 @@ class Comentario {
 
   Comentario(
       {required this.titulo, required this.descricao, required this.idUsuario, required this.data});
-      // {required this.titulo, required this.descricao, required this.data});
 
   factory Comentario.fromJson(Map<String, dynamic> json) {
     final titulo = json['titulo'];

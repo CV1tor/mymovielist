@@ -12,7 +12,7 @@ class Usuario {
     final senha = json['senha'];
     final favoritosJson = json['listaFavoritos'] as List<dynamic>;
     final listaFavoritos = favoritosJson
-        .map((favoritoJson) => Filme.fromJson(favoritoJson))
+        .map((favoritoJson) => Filme.fromJson(favoritoJson, 1))
         .toList();
 
     return Usuario(

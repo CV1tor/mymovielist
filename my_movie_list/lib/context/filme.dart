@@ -21,10 +21,10 @@ class FilmeContext extends ChangeNotifier {
     if (response.statusCode == 200) {
       List<dynamic> body = json.decode(response.body);
 
-      body.forEach((value) {
-        final filme = Filme.fromJson(value);
+      for(var index=0; index<body.length; index++) {
+        final filme = Filme.fromJson(body[index], index);
         _dados.add(filme);
-      });
+      }
 
       return _dados;
     } else {
@@ -32,23 +32,37 @@ class FilmeContext extends ChangeNotifier {
     }
   }
 
-  Future<void> adicionarComentario(Comentario comentario) async {
-    // id de filme
-    // id de usuário
-    
+  Future<void> adicionarComentario(Comentario comentario, String idFilme) async {
     var request = jsonEncode({
       "titulo": comentario.titulo,
       "descricao": comentario.descricao,
       "data": comentario.data.toString(),
-      "idUsuario": '1',
+      "idUsuario": comentario.idUsuario,
     });
 
-    final response = await http.post(Uri.parse('$_baseUrl/filmes/0/comentarios.json'), body: request);
+    final response = await http.post(Uri.parse('$_baseUrl/filmes/$idFilme/comentarios.json'), body: request);
 
     if (response.statusCode == 200) {
       _dados[0].comentarios.add(comentario);
     } else {
       throw Exception('Erro ao adicionar comentário');
     }
+  }
+
+  Future<void> editarComentario(Comentario comentario, String idFilme, String idComentario) async {
+    // var request = jsonEncode({
+    //   "titulo": comentario.titulo,
+    //   "descricao": comentario.descricao,
+    //   "data": comentario.data.toString(),
+    //   "idUsuario": comentario.idUsuario,
+    // });
+
+    // final response = await http.post(Uri.parse('$_baseUrl/filmes/$idFilme/comentarios/$idComentario.json'), body: request);
+
+    // if (response.statusCode == 200) {
+    //   _dados[0].comentarios[idComentario] = comentario;
+    // } else {
+    //   throw Exception('Erro ao adicionar comentário');
+    // }
   }
 }

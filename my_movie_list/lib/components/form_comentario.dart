@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/context/filme.dart';
 import 'package:my_movie_list/models/comentario.dart';
+import 'package:my_movie_list/models/filme.dart';
 import 'package:provider/provider.dart';
 
 class FormComentario extends StatefulWidget {
   Function(Comentario) cadastrarComentario;
-  FormComentario({super.key, required this.cadastrarComentario});
+  Filme filmeModel;
+  Comentario? comentario;
+  FormComentario({super.key, required this.cadastrarComentario, required this.filmeModel, this.comentario});
 
   @override
   State<FormComentario> createState() => _FormComentarioState();
 }
 
 class _FormComentarioState extends State<FormComentario> {
-  final _comentarioTitulo = TextEditingController();
-  final _comentarioDescricao = TextEditingController();
+  var _comentarioTitulo = TextEditingController();
+  var _comentarioDescricao = TextEditingController();
   String erroTitulo = "";
   String erroDescricao = "";
-  _cadastrarComentario(FilmeContext filme) {
+  _finalizarForm(FilmeContext filme, bool editarComentario) {
     if (_comentarioTitulo.text.isNotEmpty &&
         _comentarioDescricao.text.isNotEmpty) {
       Comentario comentario = Comentario(
@@ -24,8 +27,8 @@ class _FormComentarioState extends State<FormComentario> {
           descricao: _comentarioDescricao.text,
           idUsuario: '1',
           data: DateTime.now());
-      filme.adicionarComentario(comentario);
-      widget.cadastrarComentario(comentario);
+      editarComentario ? filme.editarComentario(comentario, widget.filmeModel.id, '1') : filme.adicionarComentario(comentario, widget.filmeModel.id);
+      // widget.cadastrarComentario(comentario);
     } else {
       if (_comentarioTitulo.text.isEmpty) {
         setState(() {
@@ -45,6 +48,15 @@ class _FormComentarioState extends State<FormComentario> {
           erroDescricao = "";
         });
       }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.comentario?.idUsuario != null) {
+      _comentarioTitulo.text = widget.comentario!.titulo;
+      _comentarioDescricao.text = widget.comentario!.descricao;
     }
   }
 
@@ -99,10 +111,10 @@ class _FormComentarioState extends State<FormComentario> {
           ),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.fromLTRB(0, 15, 0, 15)),
-              onPressed: () => {_cadastrarComentario(filmes)},
-              child: const Text(
-                "     Cadastrar comentário     ",
+                  padding: const EdgeInsets.all(15)),
+              onPressed: () => {_finalizarForm(filmes, widget.comentario?.idUsuario != null)},
+              child: Text(
+                widget.comentario?.idUsuario != null ? 'Editar comentário' : "Cadastrar comentário",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               )),
           const SizedBox(
