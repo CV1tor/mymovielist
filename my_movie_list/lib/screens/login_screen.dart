@@ -14,19 +14,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final _usuarioSenha = TextEditingController();
   String _erro = "";
 
-  _novoUsuario() {
-    Usuario novoUsuario =
-        Usuario(nome: _usuarioNome.text, senha: _usuarioSenha.text);
-
-    return novoUsuario;
-  }
-
   _autenticacao() {
     bool resposta = false;
 
     USUARIOS_CADASTRADOS.forEach((usuario) {
-      if (usuario.nome == _novoUsuario().nome &&
-          usuario.senha == _novoUsuario().senha) {
+      if (usuario.nome == _usuarioNome.toString() &&
+          usuario.senha == _usuarioSenha.toString()) {
         resposta = true;
       }
     });
@@ -104,6 +97,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () => _login(context),
                             child: Text(
                               "Login",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ))),
+                  ],
+                ),
+                SizedBox(height: 20,),
+                Row(
+                  children: [
+                    Expanded(
+                        child: OutlinedButton(
+                          
+                            style: OutlinedButton.styleFrom(
+                                padding: EdgeInsets.fromLTRB(0, 15, 0, 15), side: BorderSide(color: Colors.red),  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5)))),
+                            onPressed: () => Navigator.of(context).pushNamed('/cadastro'),
+                            child: Text(
+                              "Cadastro",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ))),

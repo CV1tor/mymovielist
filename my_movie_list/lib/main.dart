@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_movie_list/context/filme.dart';
 import 'package:my_movie_list/models/favoritos_provider.dart';
 import 'package:my_movie_list/models/filme.dart';
+import 'package:my_movie_list/screens/cadastro_screen.dart';
 import 'package:my_movie_list/screens/filme_detalhe_screen.dart';
 import 'package:my_movie_list/screens/login_screen.dart';
 import 'package:my_movie_list/screens/tabs_screen.dart';
@@ -61,10 +62,11 @@ class _MyAppState extends State<MyApp> {
               ),
         ),
         // initialRoute: '/login',
-        initialRoute: '/',
+        initialRoute: '/login',
         routes: {
           Rotas.HOME: (ctx) => TabsScreen(filmesFavoritos: _filmesFavoritos),
           Rotas.LOGIN: (ctx) => LoginScreen(),
+          Rotas.CADASTRO: (ctx) => CadastroScreen(),
           Rotas.MOVIE_DETAIL: (ctx) => FilmeDetalheScreen(
                 toggleFavoritos: _toggleFavoritos,
                 eFavorito: _eFavorito,

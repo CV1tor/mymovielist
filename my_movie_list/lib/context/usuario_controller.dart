@@ -52,21 +52,4 @@ class UsuarioController extends ChangeNotifier {
     }
   }
 
-  Future<void> editarComentario(
-      Comentario comentario, String idFilme, String idComentario) async {
-    // var request = jsonEncode({
-    //   "titulo": comentario.titulo,
-    //   "descricao": comentario.descricao,
-    //   "data": comentario.data.toString(),
-    //   "idUsuario": comentario.idUsuario,
-    // });
-
-    // final response = await http.post(Uri.parse('$_baseUrl/filmes/$idFilme/comentarios/$idComentario.json'), body: request);
-
-    // if (response.statusCode == 200) {
-    //   _dados[0].comentarios[idComentario] = comentario;
-    // } else {
-    //   throw Exception('Erro ao adicionar comentário');
-    // }
-  }
 }
