@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:my_movie_list/context/usuario_controller.dart';
 import 'package:my_movie_list/data/dados.dart';
 import 'package:my_movie_list/models/usuario.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -12,30 +14,30 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _usuarioNome = TextEditingController();
   final _usuarioSenha = TextEditingController();
+  late Future<List<Usuario>> usuariosCadastrados;
+
   String _erro = "";
 
-  _novoUsuario() {
-    Usuario novoUsuario =
-        Usuario(nome: _usuarioNome.text, senha: _usuarioSenha.text);
-
-    return novoUsuario;
-  }
-
-  _autenticacao() {
+  _autenticacao(BuildContext context) async {
     bool resposta = false;
 
-    USUARIOS_CADASTRADOS.forEach((usuario) {
-      if (usuario.nome == _novoUsuario().nome &&
-          usuario.senha == _novoUsuario().senha) {
-        resposta = true;
-      }
-    });
+    final usuariosProvider =
+        Provider.of<UsuarioController>(context, listen: false);
+
+    usuariosCadastrados = usuariosProvider.carregarUsuarios();
+
+    await usuariosCadastrados.then((response) => response.forEach((usuario) {
+          if (usuario.nome == _usuarioNome.text &&
+              usuario.senha == _usuarioSenha.text) {
+            resposta = true;
+          }
+        }));
 
     return resposta;
   }
 
-  _login(BuildContext context) {
-    if (_autenticacao()) {
+  _login(BuildContext context) async {
+    if (await _autenticacao(context)) {
       Navigator.of(context).pushNamed('/');
     } else {
       setState(() {
@@ -104,6 +106,28 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () => _login(context),
                             child: Text(
                               "Login",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ))),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                                padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                                side: BorderSide(color: Colors.red),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5)))),
+                            onPressed: () =>
+                                Navigator.of(context).pushNamed('/cadastro'),
+                            child: Text(
+                              "Cadastro",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ))),
