@@ -18,13 +18,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String _erro = "";
 
-  _autenticacao(BuildContext context) async {
-    bool resposta = false;
-
+  @override
+  void initState() {
+    super.initState();
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
 
     usuariosCadastrados = usuariosProvider.carregarUsuarios();
+  }
+
+  _autenticacao(BuildContext context) async {
+    bool resposta = false;
 
     await usuariosCadastrados.then((response) => response.forEach((usuario) {
           if (usuario.nome == _usuarioNome.text &&
