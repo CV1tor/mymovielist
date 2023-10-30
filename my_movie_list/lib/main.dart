@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/context/filme.dart';
+import 'package:my_movie_list/context/usuario_controller.dart';
 import 'package:my_movie_list/models/favoritos_provider.dart';
 import 'package:my_movie_list/models/filme.dart';
 import 'package:my_movie_list/screens/cadastro_screen.dart';
@@ -45,6 +46,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ListenableProvider(create: (context) => FilmeContext()),
+        ChangeNotifierProvider(create: (context) => UsuarioController())
       ],
       child: MaterialApp(
         title: 'MyMovieList',

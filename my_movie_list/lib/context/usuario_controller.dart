@@ -9,7 +9,7 @@ class UsuarioController extends ChangeNotifier {
   final _baseUrl = 'https://projeto-un2-mobile-default-rtdb.firebaseio.com/';
   List<Usuario> _usuariosCadastrados = [];
 
-  List<Usuario> get dados => _usuariosCadastrados;
+  List<Usuario> get usuarios => _usuariosCadastrados;
 
   Future<List<Usuario>> carregarUsuarios() async {
     final response = await http.get(
@@ -17,39 +17,42 @@ class UsuarioController extends ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
-      List<dynamic> body = json.decode(response.body);
+      print(json.decode(response.body));
+      Map<String, dynamic> body = json.decode(response.body);
 
-      for (var index = 0; index < body.length; index++) {
-        final novoUsuario = Usuario.fromJson(body[index]);
+      body.values.forEach((element) {
+        print(element);
+        final novoUsuario = Usuario.fromJson(element);
         _usuariosCadastrados.add(novoUsuario);
-      }
+      });
 
+      print(_usuariosCadastrados);
       return _usuariosCadastrados;
-
     } else {
       throw Exception('Erro ao carregar usuários!');
     }
   }
 
-  Future<void> adicionarUsuario(
-      Usuario usuario) async {
+  Future<void> adicionarUsuario(Usuario usuario) async {
     var request = jsonEncode({
+      "id": usuario.id,
       "nome": usuario.nome,
       "email": usuario.email,
       "senha": usuario.senha,
       "foto": usuario.foto,
-      "listaFavoritos": usuario.listaFavoritos
     });
 
-    final response = await http.post(
-        Uri.parse('$_baseUrl/usuarios.json'),
+    final response = await http.post(Uri.parse('$_baseUrl/usuarios.json'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
         body: request);
 
     if (response.statusCode == 200) {
       _usuariosCadastrados.add(usuario);
+      notifyListeners();
     } else {
       throw Exception('Erro ao adicionar usuario');
     }
   }
-
 }

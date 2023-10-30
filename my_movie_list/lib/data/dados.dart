@@ -3,11 +3,7 @@ import 'package:my_movie_list/models/comentario.dart';
 import '../models/usuario.dart';
 import '../models/filme.dart';
 
-final USUARIOS_CADASTRADOS = [
-  Usuario(nome: "John Doe", senha: "123", email: ''),
-  Usuario(nome: "Peter Parker", senha: "spiderman101", email: ''),
-  Usuario(nome: "Luke Skywalker", senha: "jedi123", email: '')
-];
+
 List<Comentario> c = [
   // Comentario(titulo: "titulo", descricao: "descricao", data: DateTime.now())
   Comentario(titulo: "titulo", descricao: "descricao", idUsuario: '1', data: DateTime.now())
