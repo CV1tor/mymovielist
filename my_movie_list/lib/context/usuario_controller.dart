@@ -8,8 +8,22 @@ import 'package:http/http.dart' as http;
 class UsuarioController extends ChangeNotifier {
   final _baseUrl = 'https://projeto-un2-mobile-default-rtdb.firebaseio.com/';
   List<Usuario> _usuariosCadastrados = [];
+  late Usuario usuarioAtual;
 
   List<Usuario> get usuarios => _usuariosCadastrados;
+
+  Future<void> setUsuarioAtual(String nome) async {
+    carregarUsuarios();
+    Usuario usuario;
+    usuario =
+        _usuariosCadastrados.firstWhere((element) => element.nome == nome);
+
+    usuarioAtual = usuario;
+  }
+
+  Future<Usuario> getUsuarioAtual() async {
+    return usuarioAtual;
+  }
 
   Future<List<Usuario>> carregarUsuarios() async {
     final response = await http.get(
@@ -20,9 +34,10 @@ class UsuarioController extends ChangeNotifier {
       print(json.decode(response.body));
       Map<String, dynamic> body = json.decode(response.body);
 
-      body.values.forEach((element) {
+      body.forEach((id, element) {
+        print('element');
         print(element);
-        final novoUsuario = Usuario.fromJson(element);
+        final novoUsuario = Usuario.fromJson(id, element);
         _usuariosCadastrados.add(novoUsuario);
       });
 
@@ -35,7 +50,6 @@ class UsuarioController extends ChangeNotifier {
 
   Future<void> adicionarUsuario(Usuario usuario) async {
     var request = jsonEncode({
-      "id": usuario.id,
       "nome": usuario.nome,
       "email": usuario.email,
       "senha": usuario.senha,
@@ -49,10 +63,32 @@ class UsuarioController extends ChangeNotifier {
         body: request);
 
     if (response.statusCode == 200) {
-      _usuariosCadastrados.add(usuario);
+      final id = jsonDecode(response.body)['name'];
+      print(jsonDecode(response.body));
+      _usuariosCadastrados.add(Usuario(
+          nome: usuario.nome,
+          email: usuario.email,
+          senha: usuario.senha,
+          id: id));
       notifyListeners();
     } else {
       throw Exception('Erro ao adicionar usuario');
     }
+  }
+
+  Future<void> editarUsuario(Usuario usuario) async {
+    final response = await http.put(
+      Uri.parse('$_baseUrl/usuarios/${usuario.id}.json'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'nome': usuario.nome,
+        'email': usuario.email,
+        'senha': usuario.senha,
+        'foto': usuario.foto,
+      }),
+    );
+    notifyListeners();
   }
 }

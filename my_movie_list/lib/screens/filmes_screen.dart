@@ -15,21 +15,17 @@ class FilmesScreen extends StatelessWidget {
       context,
       listen: false,
     );
-    
+
     return Scaffold(
       body: FutureBuilder<List<Filme>>(
         future: filmes.carregarFilmes(),
         builder: (context, snapshot) {
-          print(snapshot.data);
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-             print(snapshot.error);
             return Text('Erro ao carregar os filmes: ${snapshot.error}');
           } else {
             final filmes = snapshot.data;
-            print('snapshot\n ${filmes?.first.titulo}');
-
             return SizedBox(
               height: MediaQuery.of(context).size.height * 0.93,
               child: GridView(

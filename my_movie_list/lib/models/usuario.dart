@@ -15,8 +15,7 @@ class Usuario {
       this.foto = 'a',
       required this.id});
 
-  factory Usuario.fromJson(Map<String, dynamic> json) {
-    final id = json['id'];
+  factory Usuario.fromJson(String id, Map<String, dynamic> json) {
     final nome = json['nome'];
     final email = json['email'];
     final senha = json['senha'];
