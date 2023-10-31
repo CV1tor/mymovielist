@@ -34,10 +34,10 @@ class UsuarioController extends ChangeNotifier {
       print(json.decode(response.body));
       Map<String, dynamic> body = json.decode(response.body);
 
-      body.values.forEach((element) {
+      body.forEach((id, element) {
         print('element');
         print(element);
-        final novoUsuario = Usuario.fromJson(element);
+        final novoUsuario = Usuario.fromJson(id, element);
         _usuariosCadastrados.add(novoUsuario);
       });
 
@@ -50,7 +50,6 @@ class UsuarioController extends ChangeNotifier {
 
   Future<void> adicionarUsuario(Usuario usuario) async {
     var request = jsonEncode({
-      "id": usuario.id,
       "nome": usuario.nome,
       "email": usuario.email,
       "senha": usuario.senha,
@@ -64,7 +63,13 @@ class UsuarioController extends ChangeNotifier {
         body: request);
 
     if (response.statusCode == 200) {
-      _usuariosCadastrados.add(usuario);
+      final id = jsonDecode(response.body)['name'];
+      print(jsonDecode(response.body));
+      _usuariosCadastrados.add(Usuario(
+          nome: usuario.nome,
+          email: usuario.email,
+          senha: usuario.senha,
+          id: id));
       notifyListeners();
     } else {
       throw Exception('Erro ao adicionar usuario');
@@ -78,7 +83,6 @@ class UsuarioController extends ChangeNotifier {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'id': usuario.id,
         'nome': usuario.nome,
         'email': usuario.email,
         'senha': usuario.senha,
