@@ -18,7 +18,7 @@ class FilmeCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Card(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
+            clipBehavior: Clip.antiAlias,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Image(

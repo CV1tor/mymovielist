@@ -18,7 +18,6 @@ class _cadastroScreenState extends State<CadastroScreen> {
   bool validacaoVazioSenha = false;
   bool validacaoSenhas = false;
   bool validacaoEmail = false;
-  late Future<List<Usuario>> usuariosCadastrados;
 
   final String _erroSenhas = 'As senhas devem ser iguais!';
   final String _erroEmail = 'Esse email já pertence a um usuário!';
@@ -71,22 +70,19 @@ class _cadastroScreenState extends State<CadastroScreen> {
       });
     }
 
-    final usuariosProvider =
-        Provider.of<UsuarioController>(context, listen: false);
+    final usuariosProvider = Provider.of<UsuarioController>(context, listen: false);
 
-    usuariosCadastrados = usuariosProvider.carregarUsuarios();
-
-    usuariosCadastrados.then((response) => response.forEach((usuario) {
-          if (usuario.email == _usuarioEmail.text) {
-            setState(() {
-              validacaoEmail = true;
-            });
-          } else {
-            setState(() {
-              validacaoEmail = false;
-            });
-          }
-        }));
+    usuariosProvider.usuarios.forEach((usuario) {
+      if (usuario.email == _usuarioEmail.text) {
+        setState(() {
+          validacaoEmail = true;
+        });
+      } else {
+        setState(() {
+          validacaoEmail = false;
+        });
+      }
+    });
 
     if (validacaoEmail ||
         validacaoSenhas ||

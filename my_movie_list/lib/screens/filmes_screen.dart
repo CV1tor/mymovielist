@@ -21,7 +21,7 @@ class FilmesScreen extends StatelessWidget {
         future: filmes.carregarFilmes(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Text('Erro ao carregar os filmes: ${snapshot.error}');
           } else {
