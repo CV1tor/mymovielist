@@ -30,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (usuario.nome == _usuarioNome.text &&
               usuario.senha == _usuarioSenha.text) {
             resposta = true;
+            usuariosProvider.setUsuarioAtual(usuario.nome);
           }
         }));
 

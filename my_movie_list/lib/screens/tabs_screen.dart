@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/models/filme.dart';
+import 'package:my_movie_list/models/usuario.dart';
+import 'package:my_movie_list/screens/editar_usuario_screen.dart';
 import 'package:my_movie_list/screens/favoritos_screen.dart';
 import 'package:my_movie_list/screens/filmes_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../context/usuario_controller.dart';
 
 class TabsScreen extends StatefulWidget {
   final List<Filme> filmesFavoritos;
@@ -20,13 +25,13 @@ class _TabsScreenState extends State<TabsScreen> {
   }
 
   late List<Widget> _screens;
-
   @override
   void initState() {
     super.initState();
     _screens = [
       FilmesScreen(),
-      FavoritosScreen(filmesFavoritos: widget.filmesFavoritos)
+      FavoritosScreen(filmesFavoritos: widget.filmesFavoritos),
+      EditarUsuarioScreen()
     ];
   }
 
@@ -65,6 +70,8 @@ class _TabsScreenState extends State<TabsScreen> {
               icon: Icon(Icons.home_outlined), label: 'Home'),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite_border), label: 'Favoritos'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Configurações')
         ],
       ),
     );
