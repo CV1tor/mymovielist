@@ -27,7 +27,7 @@ class Filme {
       Map<String, dynamic> comentarios = json['comentarios'];
       
       comentarios.forEach((key, comentario) {
-        comentariosFormatados.add(Comentario.fromJson(comentario));
+        comentariosFormatados.add(Comentario.fromJson(comentario, key));
       });
     }
    
