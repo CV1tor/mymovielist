@@ -5,10 +5,9 @@ import 'package:my_movie_list/models/filme.dart';
 import 'package:provider/provider.dart';
 
 class FormComentario extends StatefulWidget {
-  Function(Comentario) cadastrarComentario;
   Filme filmeModel;
   Comentario? comentario;
-  FormComentario({super.key, required this.cadastrarComentario, required this.filmeModel, this.comentario});
+  FormComentario({super.key, required this.filmeModel, this.comentario});
 
   @override
   State<FormComentario> createState() => _FormComentarioState();
@@ -23,12 +22,13 @@ class _FormComentarioState extends State<FormComentario> {
     if (_comentarioTitulo.text.isNotEmpty &&
         _comentarioDescricao.text.isNotEmpty) {
       Comentario comentario = Comentario(
+          id: editarComentario ? widget.comentario!.id : '',
           titulo: _comentarioTitulo.text,
           descricao: _comentarioDescricao.text,
           idUsuario: '1',
           data: DateTime.now());
-      editarComentario ? filme.editarComentario(comentario, widget.filmeModel.id, '1') : filme.adicionarComentario(comentario, widget.filmeModel.id);
-      // widget.cadastrarComentario(comentario);
+      editarComentario ? filme.editarComentario(comentario, widget.filmeModel.id) : filme.adicionarComentario(comentario, widget.filmeModel.id);
+      Navigator.of(context).pop();
     } else {
       if (_comentarioTitulo.text.isEmpty) {
         setState(() {

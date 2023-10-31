@@ -63,8 +63,8 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
         ),
+        initialRoute: '/',
         // initialRoute: '/login',
-        initialRoute: '/login',
         routes: {
           Rotas.HOME: (ctx) => TabsScreen(filmesFavoritos: _filmesFavoritos),
           Rotas.LOGIN: (ctx) => LoginScreen(),

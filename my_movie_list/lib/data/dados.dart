@@ -6,7 +6,7 @@ import '../models/filme.dart';
 
 List<Comentario> c = [
   // Comentario(titulo: "titulo", descricao: "descricao", data: DateTime.now())
-  Comentario(titulo: "titulo", descricao: "descricao", idUsuario: '1', data: DateTime.now())
+  Comentario(id: "1", titulo: "titulo", descricao: "descricao", idUsuario: '1', data: DateTime.now())
 ];
 var FILMES = [
   Filme(
