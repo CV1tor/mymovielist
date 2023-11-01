@@ -6,8 +6,6 @@ import 'dart:convert';
 
 import 'package:provider/provider.dart';
 
-
-
 class FavoritoProviderModel extends ChangeNotifier {
   final _baseUrl = 'https://projeto-un2-mobile-default-rtdb.firebaseio.com/';
   List<Filme> filmesFavoritos = [];
@@ -68,12 +66,18 @@ class FavoritoProviderModel extends ChangeNotifier {
   }
 
   void toggleFavoritos(Filme filme) {
-    if (eFavorito(filme)) {
-      adicionarFilmeFavorito(filme);
+    if (!eFavorito(filme)) {
+      filmesFavoritos.add(filme);
     } else {
       filmesFavoritos.remove(filme);
     }
     notifyListeners();
+    for (int i = 0; i < filmesFavoritos.length; i++) {
+      print('i ${i}');
+      print(filmesFavoritos[i].id);
+      print('toggle${eFavorito(filmesFavoritos[i])}');
+    }
+    print('lenght ${filmesFavoritos.length}');
   }
 
   bool eFavorito(Filme filme) {

@@ -23,29 +23,24 @@ class _LoginScreenState extends State<LoginScreen> {
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
 
-        usuariosProvider.carregarUsuarios();
-
-
-
-
+    usuariosProvider.carregarUsuarios();
   }
 
   _autenticacao(BuildContext context) async {
     bool resposta = false;
-    
+
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
-  
+    late final usuariosCadastrados = usuariosProvider.carregarUsuarios();
 
-    usuariosProvider.usuarios.forEach((usuario) {
-      
+    await usuariosCadastrados.then((response) => response.forEach((usuario) {
           if (usuario.nome == _usuarioNome.text &&
               usuario.senha == _usuarioSenha.text) {
             resposta = true;
-         
+
             usuariosProvider.setUsuarioAtual(usuario.nome);
           }
-      });
+        }));
 
     return resposta;
   }
