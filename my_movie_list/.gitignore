@@ -24,10 +24,9 @@
 #Lib
 !lib/
 !lib/*/
-!lib/data/dados.dart
 !lib/components/*
 !lib/models/*
-!lib/context/*
+!lib/controller/*
 !lib/screens/*
 !lib/utils/rotas.dart
 
