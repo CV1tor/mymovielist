@@ -78,17 +78,25 @@ class _cadastroScreenState extends State<CadastroScreen> {
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
 
+
+    bool jaCadastrado = false;
     usuariosProvider.usuarios.forEach((usuario) {
       if (usuario.email == _usuarioEmail.text) {
+        jaCadastrado = true;
         setState(() {
           validacaoEmail = true;
         });
-      } else {
-        setState(() {
-          validacaoEmail = false;
-        });
-      }
+      } 
+      
     });
+
+    if (!jaCadastrado) {
+      setState(() {
+        validacaoEmail = false;
+      });
+    }
+
+    
 
     if (validacaoEmail ||
         validacaoSenhas ||
