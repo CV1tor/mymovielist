@@ -19,6 +19,8 @@ class FilmeController extends ChangeNotifier {
   }
 
   Future<List<Filme>> carregarFilmes() async {
+
+    _dados = [];
     final response = await http.get(
       Uri.parse('$_baseUrl/filmes.json'),
     );

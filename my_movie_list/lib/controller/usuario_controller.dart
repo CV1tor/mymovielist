@@ -26,6 +26,8 @@ class UsuarioController extends ChangeNotifier {
 
   Future<List<Usuario>> carregarUsuarios() async {
 
+    _usuariosCadastrados = [];
+
     print("Carregando usuarios...\n\n");
     final response = await http.get(
       Uri.parse('$_baseUrl/usuarios.json'),
