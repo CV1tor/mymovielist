@@ -32,7 +32,6 @@ class _TabsScreenState extends State<TabsScreen> {
       EditarUsuarioScreen(),
       FilmesScreen(),
       FavoritosScreen(filmesFavoritos: widget.filmesFavoritos),
-     
     ];
   }
 

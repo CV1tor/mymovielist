@@ -17,12 +17,9 @@ class FavoritoProviderModel extends ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
-      print(json.decode(response.body));
       Map<String, dynamic> body = json.decode(response.body);
 
       body.forEach((id, element) {
-        print('element');
-        print(element);
         final novoUsuario = Filme.fromJson(element, id as int);
         filmesFavoritos.add(novoUsuario);
       });
@@ -50,7 +47,6 @@ class FavoritoProviderModel extends ChangeNotifier {
 
     if (response.statusCode == 200) {
       final id = jsonDecode(response.body)['name'];
-      print(jsonDecode(response.body));
       filmesFavoritos.add(Filme(
           banner: filme.banner,
           titulo: filme.titulo,
@@ -72,12 +68,6 @@ class FavoritoProviderModel extends ChangeNotifier {
       filmesFavoritos.remove(filme);
     }
     notifyListeners();
-    for (int i = 0; i < filmesFavoritos.length; i++) {
-      print('i ${i}');
-      print(filmesFavoritos[i].id);
-      print('toggle${eFavorito(filmesFavoritos[i])}');
-    }
-    print('lenght ${filmesFavoritos.length}');
   }
 
   bool eFavorito(Filme filme) {

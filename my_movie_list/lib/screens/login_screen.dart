@@ -126,20 +126,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     Expanded(
-                        child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                                padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                                side: BorderSide(color: Colors.red),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5)))),
-                            onPressed: () =>
-                                Navigator.of(context).pushNamed('/cadastro'),
-                            child: Text(
-                              "Cadastro",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ))),
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                            padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                            side: BorderSide(color: Colors.red),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)))),
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed('/cadastro'),
+                        child: Text(
+                          "Cadastro",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        )
+                      )
+                    ),
                   ],
                 )
               ],
