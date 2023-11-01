@@ -13,24 +13,31 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _usuarioNome = TextEditingController();
   final _usuarioSenha = TextEditingController();
-  late Future<List<Usuario>> usuariosCadastrados;
 
   String _erro = "";
 
   @override
   void initState() {
     super.initState();
+
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
 
-    usuariosCadastrados = usuariosProvider.carregarUsuarios();
-    
+        usuariosProvider.carregarUsuarios();
+
+
+
+
   }
 
   _autenticacao(BuildContext context) async {
     bool resposta = false;
+    
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
+  
+
+    usuariosProvider.usuarios.forEach((usuario) {
 
 
     await usuariosCadastrados.then((response) => response.forEach((usuario) {
@@ -41,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
          
             usuariosProvider.setUsuarioAtual(usuario.nome);
           }
-        }));
+        });
 
     return resposta;
   }

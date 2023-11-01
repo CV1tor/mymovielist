@@ -41,6 +41,7 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
     return Consumer<FilmeController>(builder: (context, filmeContext, child) {
       final filme = filmeContext.retornarFilme(filmeModalRoute);
 
+    
       return Scaffold(
         appBar: AppBar(
           leadingWidth: 20,
@@ -80,7 +81,7 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                                 onPressed: () =>
                                     Provider.of<FavoritoProviderModel>(context,
                                             listen: false)
-                                        .toggleFavoritos(filme),
+                                        .adicionarFilmeFavorito(filme),
                               )
                             : IconButton(
                                 icon: const Icon(

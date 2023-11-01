@@ -13,7 +13,6 @@ class UsuarioController extends ChangeNotifier {
   List<Usuario> get usuarios => _usuariosCadastrados;
 
   Future<void> setUsuarioAtual(String nome) async {
-    carregarUsuarios();
     Usuario usuario;
     usuario =
         _usuariosCadastrados.firstWhere((element) => element.nome == nome);
@@ -26,6 +25,10 @@ class UsuarioController extends ChangeNotifier {
   }
 
   Future<List<Usuario>> carregarUsuarios() async {
+
+    _usuariosCadastrados = [];
+
+    print("Carregando usuarios...\n\n");
     final response = await http.get(
       Uri.parse('$_baseUrl/usuarios.json'),
     );
@@ -39,7 +42,6 @@ class UsuarioController extends ChangeNotifier {
         _usuariosCadastrados.add(novoUsuario);
       });
 
- 
       return _usuariosCadastrados;
     } else {
       throw Exception('Erro ao carregar usuários!');
@@ -47,6 +49,7 @@ class UsuarioController extends ChangeNotifier {
   }
 
   Future<void> adicionarUsuario(Usuario usuario) async {
+   
     var request = jsonEncode({
       "nome": usuario.nome,
       "email": usuario.email,
@@ -87,9 +90,17 @@ class UsuarioController extends ChangeNotifier {
       }),
     );
 
-    
     notifyListeners();
   }
 
-  
+    Future<void> removerUsuario(Usuario usuario) async {
+    final response = await http.delete(
+      Uri.parse('$_baseUrl/usuarios/${usuario.id}.json'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    _usuariosCadastrados.remove(usuario);
+    notifyListeners();
+  }
 }
