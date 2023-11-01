@@ -242,7 +242,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                       child: Text(
                         'Excluir',
                         style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.red,
                             fontWeight: FontWeight.bold,
                             fontSize: 18),
                       ),
