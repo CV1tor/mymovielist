@@ -208,10 +208,11 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                                     filme.comentarios[index];
                                 return Card(
                                   child: Container(
-                                      child: MyCommentWidget(
-                                    comentario: comentarioAtual,
-                                    filmeModels: filme,
-                                  )),
+                                    child: MyCommentWidget(
+                                      comentario: comentarioAtual,
+                                      filmeModels: filme,
+                                    )
+                                  ),
                                 );
                               }),
                           ElevatedButton(

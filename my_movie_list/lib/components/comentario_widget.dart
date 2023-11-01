@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:my_movie_list/components/form_comentario.dart';
 import 'package:my_movie_list/controller/filme_controller.dart';
+import 'package:my_movie_list/controller/usuario_controller.dart';
 
 import 'package:my_movie_list/models/comentario.dart';
 import 'package:intl/intl.dart';
@@ -75,6 +76,13 @@ class _MyCommentWidgetState extends State<MyCommentWidget> {
       listen: false,
     );
 
+    final usuario = Provider.of<UsuarioController>(
+      context,
+      listen: false,
+    );
+
+    var podeEditRemovComentario = usuario.usuarioAtual.id == widget.comentario.idUsuario;
+
     return Container(
       color: const Color.fromRGBO(30, 30, 30, 1),
       child: Padding(
@@ -94,9 +102,10 @@ class _MyCommentWidgetState extends State<MyCommentWidget> {
                   ),
                 ),
                 Text(
-                  "  -  ${DateFormat("dd/MM/yy").format(widget.comentario.data)}",
+                  "  - @${widget.comentario.nomeUsuario}  -  ${DateFormat("dd/MM/yy").format(widget.comentario.data)}",
                   style: const TextStyle(
                     color: Colors.grey,
+                    fontSize: 15,
                   ),
                 ),
               ],
@@ -108,24 +117,27 @@ class _MyCommentWidgetState extends State<MyCommentWidget> {
                 color: Colors.white,
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    padding: EdgeInsets.only(right: 10),
-                    constraints: BoxConstraints(),
-                    color: Colors.white,
-                    onPressed: () => _deletarComentario(
-                        widget.comentario, context, filme, widget.filmeModels),
-                    icon: Icon(Icons.delete_outline)),
-                IconButton(
-                    padding: EdgeInsets.zero,
-                    constraints: BoxConstraints(),
-                    color: Colors.white,
-                    onPressed: () => _editarComentario(
-                        widget.comentario, context, widget.filmeModels),
-                    icon: Icon(Icons.edit_outlined))
-              ],
+            Visibility(
+              visible: podeEditRemovComentario,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                      padding: EdgeInsets.only(right: 10),
+                      constraints: BoxConstraints(),
+                      color: Colors.white,
+                      onPressed: () => _deletarComentario(
+                          widget.comentario, context, filme, widget.filmeModels),
+                      icon: Icon(Icons.delete_outline)),
+                  IconButton(
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
+                      color: Colors.white,
+                      onPressed: () => _editarComentario(
+                          widget.comentario, context, widget.filmeModels),
+                      icon: Icon(Icons.edit_outlined))
+                ],
+              )
             )
           ],
         ),
