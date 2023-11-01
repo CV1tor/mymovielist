@@ -33,7 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
         Provider.of<UsuarioController>(context, listen: false);
 
 
-
     await usuariosCadastrados.then((response) => response.forEach((usuario) {
       
           if (usuario.nome == _usuarioNome.text &&

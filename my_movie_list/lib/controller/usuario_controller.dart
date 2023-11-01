@@ -35,6 +35,7 @@ class UsuarioController extends ChangeNotifier {
 
       body.forEach((id, element) {
         final novoUsuario = Usuario.fromJson(id, element);
+        print(novoUsuario);
         _usuariosCadastrados.add(novoUsuario);
       });
 
