@@ -15,6 +15,11 @@ class FavoritosScreen extends StatefulWidget {
 }
 
 class _FavoritosScreenState extends State<FavoritosScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Future<void> _excluirFilme(int index) async {
     bool confirmacao = await showDialog(
       context: context,
@@ -67,8 +72,9 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
             itemBuilder: (ctx, index) {
               final filme = favoritos.filmesFavoritos[index];
               return FilmeItem(
-                  filme: filme,
-                  deleteFavorito: () => favoritos.toggleFavoritos(filme));
+                filme: filme,
+                deleteFavorito: () => favoritos.toggleFavoritos(filme),
+              );
             },
           );
         }

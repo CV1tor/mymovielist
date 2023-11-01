@@ -9,6 +9,47 @@ class EditarUsuarioScreen extends StatefulWidget {
 }
 
 class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
+  Future<void> _excluirUsuario() async {
+    bool confirmacao = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(255, 44, 44, 44),
+          title: const Text(
+            'Confirmação',
+            style: TextStyle(color: Colors.red),
+          ),
+          content: const Text(
+            'Tem certeza de que deseja EXCLUIR sua conta?\nEssa ação não poderá ser desfeita.',
+            style: TextStyle(color: Colors.white),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop(false); // Cancelar a exclusão
+              },
+            ),
+            TextButton(
+              child: const Text('Excluir'),
+              onPressed: () {
+                Navigator.of(context).pop(true); // Confirmar a exclusão
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmacao == true) {
+      // excluir
+      final usuariosProvider =
+          Provider.of<UsuarioController>(context, listen: false);
+      usuariosProvider.removerUsuario(usuariosProvider.usuarioAtual);
+      Navigator.of(context).pushNamed('/login');
+    }
+  }
+
   final _formKey = GlobalKey<FormState>();
   final nomeController = TextEditingController();
   final emailController = TextEditingController();
@@ -168,17 +209,45 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    if (senhaAtualController.text == '' || _usuario == null) {
-                      autenticacao(Provider.of<UsuarioController>(context,
-                          listen: false));
-                    } else {
-                      autenticacao(Provider.of<UsuarioController>(context,
-                          listen: false));
-                    }
-                  },
-                  child: const Text('Salvar Alterações'),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        if (senhaAtualController.text == '' ||
+                            _usuario == null) {
+                          autenticacao(Provider.of<UsuarioController>(context,
+                              listen: false));
+                        } else {
+                          autenticacao(Provider.of<UsuarioController>(context,
+                              listen: false));
+                        }
+                      },
+                      child: const Text(
+                        'Salvar Alterações',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
+                    ),
+                    OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: Colors.red),
+                      ),
+                      onPressed: () {
+                        _excluirUsuario();
+                      },
+                      child: Text(
+                        'Excluir',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

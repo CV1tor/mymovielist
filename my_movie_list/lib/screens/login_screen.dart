@@ -21,17 +21,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    final usuariosProvider =
-        Provider.of<UsuarioController>(context, listen: false);
-
-    usuariosCadastrados = usuariosProvider.carregarUsuarios();
   }
 
   _autenticacao(BuildContext context) async {
     bool resposta = false;
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
-
+    usuariosCadastrados = usuariosProvider.carregarUsuarios();
     await usuariosCadastrados.then((response) => response.forEach((usuario) {
           if (usuario.nome == _usuarioNome.text &&
               usuario.senha == _usuarioSenha.text) {
