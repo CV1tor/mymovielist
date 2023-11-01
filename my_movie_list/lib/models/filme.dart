@@ -9,6 +9,7 @@ class Filme {
   final String descricao;
   final List<String> genero;
   final List<String> imagens;
+  // final bool eFavorito;
   List<Comentario> comentarios;
 
   Filme(
@@ -18,6 +19,7 @@ class Filme {
       required this.descricao,
       required this.genero,
       required this.imagens,
+      // required this.eFavorito,
       required this.comentarios});
 
   factory Filme.fromJson(Map<String, dynamic> json, int id) {

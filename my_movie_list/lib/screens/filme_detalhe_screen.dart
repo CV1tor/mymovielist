@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_movie_list/components/comentario_widget.dart';
 import 'package:my_movie_list/components/tag_genero.dart';
 import 'package:my_movie_list/controller/filme_controller.dart';
+import 'package:my_movie_list/controller/usuario_controller.dart';
 import 'package:my_movie_list/models/comentario.dart';
 import 'package:my_movie_list/models/favoritos_provider.dart';
 import 'package:my_movie_list/models/filme.dart';
@@ -34,9 +35,18 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
         });
   }
 
+  _favoritarFilme(Filme filme, UsuarioController usuario) {
+    usuario.favoritarFilme(usuario.usuarioAtual, filme.id);
+  }
+
+  // _desfavoritarFilme(Filme filme) {
+
+  // }
+
   @override
   Widget build(BuildContext context) {
     final filmeModalRoute = ModalRoute.of(context)!.settings.arguments as Filme;
+    final usuario = Provider.of<UsuarioController>(context, listen: false);
 
     return Consumer<FilmeController>(builder: (context, filmeContext, child) {
       final filme = filmeContext.retornarFilme(filmeModalRoute);
@@ -70,29 +80,38 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                         ),
                       ),
                       InkWell(
-                        child: Provider.of<FavoritoProviderModel>(context)
-                                .eFavorito(filme)
-                            ? IconButton(
+                        child: IconButton(
                                 icon: const Icon(
                                   Icons.favorite,
                                   color: Colors.red,
                                   size: 28,
                                 ),
-                                onPressed: () =>
-                                    Provider.of<FavoritoProviderModel>(context,
-                                            listen: false)
-                                        .adicionarFilmeFavorito(filme),
-                              )
-                            : IconButton(
-                                icon: const Icon(
-                                  Icons.favorite_outline,
-                                  color: Colors.white,
-                                  size: 28,
-                                ),
-                                onPressed: () =>
-                                    Provider.of<FavoritoProviderModel>(context,
-                                            listen: false)
-                                        .toggleFavoritos(filme)),
+                                onPressed: () => _favoritarFilme(filme, usuario)
+                        ),
+                        // Provider.of<FavoritoProviderModel>(context)
+                        //         .eFavorito(filme)
+                        //     ? IconButton(
+                        //         icon: const Icon(
+                        //           Icons.favorite,
+                        //           color: Colors.red,
+                        //           size: 28,
+                        //         ),
+                        //         onPressed: () => _favoritarFilme(filme, usuario),
+                        //         // onPressed: () =>
+                        //         //     Provider.of<FavoritoProviderModel>(context,
+                        //         //             listen: false)
+                        //         //         .adicionarFilmeFavorito(filme),
+                        //       )
+                        //     : IconButton(
+                        //         icon: const Icon(
+                        //           Icons.favorite_outline,
+                        //           color: Colors.white,
+                        //           size: 28,
+                        //         ),
+                        //         onPressed: () =>
+                        //             Provider.of<FavoritoProviderModel>(context,
+                        //                     listen: false)
+                        //                 .toggleFavoritos(filme)),
                       ),
                     ]),
                     Container(

@@ -14,13 +14,13 @@ class FilmeController extends ChangeNotifier {
 
   Filme retornarFilme(Filme filme) {
     var index = _dados.indexOf(filme);
-
+    print(index);
     return _dados.elementAt(index);
   }
 
   Future<List<Filme>> carregarFilmes() async {
 
-    _dados = [];
+    // _dados = [];
     final response = await http.get(
       Uri.parse('$_baseUrl/filmes.json'),
     );
