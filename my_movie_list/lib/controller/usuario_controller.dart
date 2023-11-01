@@ -38,7 +38,6 @@ class UsuarioController extends ChangeNotifier {
         _usuariosCadastrados.add(novoUsuario);
       });
 
- 
       return _usuariosCadastrados;
     } else {
       throw Exception('Erro ao carregar usuários!');
@@ -86,9 +85,17 @@ class UsuarioController extends ChangeNotifier {
       }),
     );
 
-    
     notifyListeners();
   }
 
-  
+    Future<void> removerUsuario(Usuario usuario) async {
+    final response = await http.delete(
+      Uri.parse('$_baseUrl/usuarios/${usuario.id}.json'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    _usuariosCadastrados.remove(usuario);
+    notifyListeners();
+  }
 }
