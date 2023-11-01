@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:my_movie_list/context/usuario_controller.dart';
-import 'package:my_movie_list/data/dados.dart';
+import 'package:my_movie_list/controller/usuario_controller.dart';
 import 'package:my_movie_list/models/usuario.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Provider.of<UsuarioController>(context, listen: false);
 
     usuariosCadastrados = usuariosProvider.carregarUsuarios();
+    
   }
 
   _autenticacao(BuildContext context) async {
@@ -32,10 +32,14 @@ class _LoginScreenState extends State<LoginScreen> {
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
 
+
+
     await usuariosCadastrados.then((response) => response.forEach((usuario) {
+      
           if (usuario.nome == _usuarioNome.text &&
               usuario.senha == _usuarioSenha.text) {
             resposta = true;
+         
             usuariosProvider.setUsuarioAtual(usuario.nome);
           }
         }));

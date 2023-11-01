@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/components/filme_item.dart';
-import 'package:my_movie_list/data/dados.dart';
 import 'package:my_movie_list/models/favoritos_provider.dart';
 import 'package:my_movie_list/models/filme.dart';
 import 'package:provider/provider.dart';

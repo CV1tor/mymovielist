@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_movie_list/context/filme.dart';
-import 'package:my_movie_list/context/usuario_controller.dart';
+import 'package:my_movie_list/controller/filme_controller.dart';
+import 'package:my_movie_list/controller/usuario_controller.dart';
 import 'package:my_movie_list/models/favoritos_provider.dart';
 import 'package:my_movie_list/models/filme.dart';
 import 'package:my_movie_list/screens/cadastro_screen.dart';
@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ListenableProvider(create: (context) => FilmeContext()),
+        ListenableProvider(create: (context) => FilmeController()),
         ChangeNotifierProvider(create: (context) => UsuarioController())
       ],
       child: MaterialApp(
@@ -63,8 +63,7 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
         ),
-        initialRoute: '/',
-        // initialRoute: '/login',
+        initialRoute: '/login',
         routes: {
           Rotas.HOME: (ctx) => TabsScreen(filmesFavoritos: _filmesFavoritos),
           Rotas.LOGIN: (ctx) => LoginScreen(),

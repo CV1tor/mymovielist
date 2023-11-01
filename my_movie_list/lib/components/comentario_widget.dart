@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:my_movie_list/components/form_comentario.dart';
-import 'package:my_movie_list/context/filme.dart';
+import 'package:my_movie_list/controller/filme_controller.dart';
 
 import 'package:my_movie_list/models/comentario.dart';
 import 'package:intl/intl.dart';
@@ -12,62 +12,65 @@ import 'package:provider/provider.dart';
 class MyCommentWidget extends StatefulWidget {
   final Comentario comentario;
   final Filme filmeModels;
-  const MyCommentWidget({super.key, required this.comentario, required this.filmeModels});
+  const MyCommentWidget(
+      {super.key, required this.comentario, required this.filmeModels});
 
   @override
   State<MyCommentWidget> createState() => _MyCommentWidgetState();
 }
 
-_deletarComentario(Comentario comentario, BuildContext context, FilmeContext filme, Filme filmeModels) {
+_deletarComentario(Comentario comentario, BuildContext context,
+    FilmeController filme, Filme filmeModels) {
   showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: const Color.fromARGB(255, 44, 44, 44),
-          title: const Text(
-            'Confirmação',
-            style: TextStyle(color: Colors.red),
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: const Color.fromARGB(255, 44, 44, 44),
+        title: const Text(
+          'Confirmação',
+          style: TextStyle(color: Colors.red),
+        ),
+        content: const Text(
+          'Tem certeza de que deseja remover esse comentário?',
+          style: TextStyle(color: Colors.white),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Cancelar'),
+            onPressed: () {
+              Navigator.of(context).pop(); // Cancelar a exclusão
+            },
           ),
-          content: const Text(
-            'Tem certeza de que deseja remover esse comentário?',
-            style: TextStyle(color: Colors.white),
+          TextButton(
+            child: const Text('Remover'),
+            onPressed: () {
+              filme.removerComentario(comentario, filmeModels.id);
+              Navigator.of(context).pop(); // Confirmar a exclusão
+            },
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancelar'),
-              onPressed: () {
-                Navigator.of(context).pop(); // Cancelar a exclusão
-              },
-            ),
-            TextButton(
-              child: const Text('Remover'),
-              onPressed: () {
-                filme.removerComentario(comentario, filmeModels.id);
-                Navigator.of(context).pop(); // Confirmar a exclusão
-              },
-            ),
-          ],
-        );
-      },
-    );
+        ],
+      );
+    },
+  );
 }
 
-_editarComentario(Comentario comentario, BuildContext context, Filme filmeModels) {
+_editarComentario(
+    Comentario comentario, BuildContext context, Filme filmeModels) {
   showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (_) {
-      return FormComentario(
-        filmeModel: filmeModels,
-        comentario: comentario,
-      );
-    });
+      context: context,
+      isScrollControlled: true,
+      builder: (_) {
+        return FormComentario(
+          filmeModel: filmeModels,
+          comentario: comentario,
+        );
+      });
 }
 
 class _MyCommentWidgetState extends State<MyCommentWidget> {
   @override
   Widget build(BuildContext context) {
-    final filme = Provider.of<FilmeContext>(
+    final filme = Provider.of<FilmeController>(
       context,
       listen: false,
     );
@@ -109,19 +112,19 @@ class _MyCommentWidgetState extends State<MyCommentWidget> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  padding: EdgeInsets.only(right: 10),
-                  constraints: BoxConstraints(),
-                  color: Colors.white,
-                  onPressed: () => _deletarComentario(widget.comentario, context, filme, widget.filmeModels),
-                  icon: Icon(Icons.delete_outline)
-                ),
+                    padding: EdgeInsets.only(right: 10),
+                    constraints: BoxConstraints(),
+                    color: Colors.white,
+                    onPressed: () => _deletarComentario(
+                        widget.comentario, context, filme, widget.filmeModels),
+                    icon: Icon(Icons.delete_outline)),
                 IconButton(
-                  padding: EdgeInsets.zero,
-                  constraints: BoxConstraints(),
-                  color: Colors.white,
-                  onPressed: () => _editarComentario(widget.comentario, context, widget.filmeModels),
-                  icon: Icon(Icons.edit_outlined)
-                )
+                    padding: EdgeInsets.zero,
+                    constraints: BoxConstraints(),
+                    color: Colors.white,
+                    onPressed: () => _editarComentario(
+                        widget.comentario, context, widget.filmeModels),
+                    icon: Icon(Icons.edit_outlined))
               ],
             )
           ],

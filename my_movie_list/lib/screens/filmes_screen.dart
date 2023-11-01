@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/components/filme_card.dart';
-import 'package:my_movie_list/context/filme.dart';
-import 'package:my_movie_list/data/dados.dart';
+import 'package:my_movie_list/controller/filme_controller.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'dart:convert';
@@ -11,7 +11,7 @@ import '../models/filme.dart';
 class FilmesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final filmes = Provider.of<FilmeContext>(
+    final filmes = Provider.of<FilmeController>(
       context,
       listen: false,
     );

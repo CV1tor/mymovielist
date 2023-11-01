@@ -6,7 +6,7 @@ import 'package:my_movie_list/screens/favoritos_screen.dart';
 import 'package:my_movie_list/screens/filmes_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../context/usuario_controller.dart';
+import '../controller/usuario_controller.dart';
 
 class TabsScreen extends StatefulWidget {
   final List<Filme> filmesFavoritos;
@@ -18,7 +18,7 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  int _indexSelectedScreen = 0;
+  int _indexSelectedScreen = 1;
 
   _logout(BuildContext context) {
     Navigator.of(context).pop();
@@ -29,9 +29,10 @@ class _TabsScreenState extends State<TabsScreen> {
   void initState() {
     super.initState();
     _screens = [
+      EditarUsuarioScreen(),
       FilmesScreen(),
       FavoritosScreen(filmesFavoritos: widget.filmesFavoritos),
-      EditarUsuarioScreen()
+     
     ];
   }
 
@@ -67,11 +68,11 @@ class _TabsScreenState extends State<TabsScreen> {
         currentIndex: _indexSelectedScreen,
         items: [
           BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Configurações'),
+          BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border), label: 'Favoritos'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Configurações')
+              icon: Icon(Icons.favorite_border), label: 'Favoritos')
         ],
       ),
     );

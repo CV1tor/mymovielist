@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../context/usuario_controller.dart';
+import '../controller/usuario_controller.dart';
 import '../models/usuario.dart';
 
 class EditarUsuarioScreen extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/components/comentario_widget.dart';
 import 'package:my_movie_list/components/tag_genero.dart';
-import 'package:my_movie_list/context/filme.dart';
+import 'package:my_movie_list/controller/filme_controller.dart';
 import 'package:my_movie_list/models/comentario.dart';
 import 'package:my_movie_list/models/favoritos_provider.dart';
 import 'package:my_movie_list/models/filme.dart';
@@ -38,11 +38,10 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
   Widget build(BuildContext context) {
     final filmeModalRoute = ModalRoute.of(context)!.settings.arguments as Filme;
 
-    return Consumer<FilmeContext>(
-      builder: (context, filmeContext, child) {
-        final filme = filmeContext.retornarFilme(filmeModalRoute);
+    return Consumer<FilmeController>(builder: (context, filmeContext, child) {
+      final filme = filmeContext.retornarFilme(filmeModalRoute);
 
-        return Scaffold(
+      return Scaffold(
         appBar: AppBar(
           leadingWidth: 20,
           title: Text(filme.titulo),
@@ -191,7 +190,8 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                                 child: const Text(
                                   "Comentar",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 14),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
                                 ))
                           ],
                         ),
@@ -203,13 +203,14 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: filme.comentarios.length,
                               itemBuilder: (context, index) {
-                                final comentarioAtual = filme.comentarios[index];
+                                final comentarioAtual =
+                                    filme.comentarios[index];
                                 return Card(
                                   child: Container(
                                       child: MyCommentWidget(
-                                          comentario: comentarioAtual,
-                                          filmeModels: filme,
-                                        )),
+                                    comentario: comentarioAtual,
+                                    filmeModels: filme,
+                                  )),
                                 );
                               }),
                           ElevatedButton(
@@ -231,7 +232,6 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
           ),
         ),
       );
-      }
-    );
+    });
   }
 }

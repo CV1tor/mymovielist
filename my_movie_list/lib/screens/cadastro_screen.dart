@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_movie_list/context/usuario_controller.dart';
+import 'package:my_movie_list/controller/usuario_controller.dart';
 import 'package:my_movie_list/models/usuario.dart';
 import 'package:provider/provider.dart';
 
@@ -69,8 +69,14 @@ class _cadastroScreenState extends State<CadastroScreen> {
         validacaoSenhas = true;
       });
     }
+    else {
+      setState(() {
+        validacaoSenhas = false;
+      });
+    }
 
-    final usuariosProvider = Provider.of<UsuarioController>(context, listen: false);
+    final usuariosProvider =
+        Provider.of<UsuarioController>(context, listen: false);
 
     usuariosProvider.usuarios.forEach((usuario) {
       if (usuario.email == _usuarioEmail.text) {
@@ -94,8 +100,18 @@ class _cadastroScreenState extends State<CadastroScreen> {
 
     usuariosProvider.adicionarUsuario(_criarNovoUsuario());
 
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text('Usuário cadastrado com sucesso!', textAlign: TextAlign.center,),
+      duration: const Duration(milliseconds: 2000),
+      width: 280.0, 
+      padding: EdgeInsets.all(15),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.red,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+    ));
     Navigator.of(context).pop();
-    return SnackBar(content: Text("Usuário adicionado com sucesso!"));
   }
 
   @override
