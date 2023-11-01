@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/controller/filme_controller.dart';
+import 'package:my_movie_list/controller/usuario_controller.dart';
 import 'package:my_movie_list/models/comentario.dart';
 import 'package:my_movie_list/models/filme.dart';
+import 'package:my_movie_list/models/usuario.dart';
 import 'package:provider/provider.dart';
 
 class FormComentario extends StatefulWidget {
@@ -18,14 +20,15 @@ class _FormComentarioState extends State<FormComentario> {
   var _comentarioDescricao = TextEditingController();
   String erroTitulo = "";
   String erroDescricao = "";
-  _finalizarForm(FilmeController filme, bool editarComentario) {
+  _finalizarForm(FilmeController filme, bool editarComentario, Usuario usuarioAtual) {
     if (_comentarioTitulo.text.isNotEmpty &&
         _comentarioDescricao.text.isNotEmpty) {
       Comentario comentario = Comentario(
           id: editarComentario ? widget.comentario!.id : '',
           titulo: _comentarioTitulo.text,
           descricao: _comentarioDescricao.text,
-          idUsuario: '1',
+          idUsuario: usuarioAtual.id,
+          nomeUsuario: usuarioAtual.nome,
           data: DateTime.now());
       editarComentario
           ? filme.editarComentario(comentario, widget.filmeModel.id)
@@ -65,6 +68,11 @@ class _FormComentarioState extends State<FormComentario> {
   @override
   Widget build(BuildContext context) {
     final filmes = Provider.of<FilmeController>(
+      context,
+      listen: false,
+    );
+
+    final usuario = Provider.of<UsuarioController>(
       context,
       listen: false,
     );
@@ -115,7 +123,7 @@ class _FormComentarioState extends State<FormComentario> {
               style:
                   ElevatedButton.styleFrom(padding: const EdgeInsets.all(15)),
               onPressed: () => {
-                    _finalizarForm(filmes, widget.comentario?.idUsuario != null)
+                    _finalizarForm(filmes, widget.comentario?.idUsuario != null, usuario.usuarioAtual)
                   },
               child: Text(
                 widget.comentario?.idUsuario != null

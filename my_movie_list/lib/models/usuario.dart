@@ -1,7 +1,7 @@
 import 'filme.dart';
 
 class Usuario {
-  String ?id;
+  String id;
   String nome;
   String email;
   String senha;
