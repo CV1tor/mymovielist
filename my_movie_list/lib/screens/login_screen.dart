@@ -39,6 +39,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     usuariosProvider.usuarios.forEach((usuario) {
 
+
+    await usuariosCadastrados.then((response) => response.forEach((usuario) {
+      
           if (usuario.nome == _usuarioNome.text &&
               usuario.senha == _usuarioSenha.text) {
             resposta = true;
