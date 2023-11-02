@@ -6,7 +6,6 @@ class Usuario {
   String email;
   String senha;
   String foto;
-  // List<Filme> listaFavoritos;
 
   Usuario(
       {required this.nome,
@@ -20,10 +19,6 @@ class Usuario {
     final email = json['email'];
     final senha = json['senha'];
     final foto = json['foto'];
-    //final favoritosJson = json['listaFavoritos'] as List<dynamic>;
-    // final listaFavoritos = favoritosJson
-    //     .map((favoritoJson) => Filme.fromJson(favoritoJson, 1))
-    //     .toList();
 
     return Usuario(
       id: id,
@@ -31,6 +26,6 @@ class Usuario {
       senha: senha,
       email: email,
       foto: foto,
-    ); //..listaFavoritos.addAll(listaFavoritos);
+    );
   }
 }

@@ -23,29 +23,24 @@ class _LoginScreenState extends State<LoginScreen> {
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
 
-        usuariosProvider.carregarUsuarios();
-
-
-
-
+    usuariosProvider.carregarUsuarios();
   }
 
   _autenticacao(BuildContext context) async {
     bool resposta = false;
-    
+
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
-  
+    late final usuariosCadastrados = usuariosProvider.carregarUsuarios();
 
-    usuariosProvider.usuarios.forEach((usuario) {
-      
+    await usuariosCadastrados.then((response) => response.forEach((usuario) {
           if (usuario.nome == _usuarioNome.text &&
               usuario.senha == _usuarioSenha.text) {
             resposta = true;
-         
+
             usuariosProvider.setUsuarioAtual(usuario.nome);
           }
-      });
+        }));
 
     return resposta;
   }
@@ -131,20 +126,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     Expanded(
-                        child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                                padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                                side: BorderSide(color: Colors.red),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5)))),
-                            onPressed: () =>
-                                Navigator.of(context).pushNamed('/cadastro'),
-                            child: Text(
-                              "Cadastro",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ))),
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                            padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                            side: BorderSide(color: Colors.red),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)))),
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed('/cadastro'),
+                        child: Text(
+                          "Cadastro",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        )
+                      )
+                    ),
                   ],
                 )
               ],

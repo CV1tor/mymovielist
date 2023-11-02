@@ -21,7 +21,7 @@ class MyCommentWidget extends StatefulWidget {
 }
 
 _deletarComentario(Comentario comentario, BuildContext context,
-    FilmeController filme, Filme filmeModels) {
+  FilmeController filme, Filme filmeModels) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
