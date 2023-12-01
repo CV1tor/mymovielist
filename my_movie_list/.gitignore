@@ -28,7 +28,10 @@
 !lib/models/*
 !lib/controller/*
 !lib/screens/*
-!lib/utils/rotas.dart
+!lib/utils/*
+
+#Android
+!android/*
 
 #Arquivos de configuração
 !.gitignore

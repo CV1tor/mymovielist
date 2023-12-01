@@ -69,14 +69,17 @@ class FavoritoProviderModel extends ChangeNotifier {
 
   void toggleFavoritos(Filme filme) {
     if (eFavorito(filme)) {
-      adicionarFilmeFavorito(filme);
-    } else {
       filmesFavoritos.remove(filme);
+    } else {
+      filmesFavoritos.add(filme);
+      
     }
     notifyListeners();
   }
 
   bool eFavorito(Filme filme) {
     return filmesFavoritos.contains(filme);
+
+    
   }
 }

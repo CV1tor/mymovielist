@@ -5,6 +5,7 @@ import 'package:my_movie_list/models/comentario.dart';
 import 'package:my_movie_list/models/filme.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:my_movie_list/utils/database.dart';
 
 class FilmeController extends ChangeNotifier {
   final _baseUrl = 'https://projeto-un2-mobile-default-rtdb.firebaseio.com/';
@@ -34,6 +35,7 @@ class FilmeController extends ChangeNotifier {
         _dados.add(filme);
       }
 
+      await atualizarSqlite(_dados);
       return _dados;
     } else {
       throw Exception('Failed to load filmes');
@@ -103,5 +105,49 @@ class FilmeController extends ChangeNotifier {
     } else {
       throw Exception('Erro ao remover comentário');
     }
+  }
+
+  Future<void> atualizarSqlite(List<Filme> filmes) async {
+    
+    final filmesUltimos = filmes;
+    filmesUltimos.sort((a, b) => b.id.compareTo(a.id)); // ordena a lista para os adicionados por último
+    
+    final bancoFilmesSqlite = await Database.getData('filme');
+
+    if (bancoFilmesSqlite.length == 5) {
+      print('\n BANCO LOCAL COM MAIS DE 5 REGISTROS! CHECANDO SE É NECESSÁRIO ALTERAÇÃO \n');
+    }
+    else {
+      for (int i = 0; i < 5; i++) {
+        await Database.insert('filme', {
+          'id': filmesUltimos[i].id,
+          'titulo': filmesUltimos[i].titulo,
+          'banner': filmesUltimos[i].banner,
+        });
+
+        for(int j = 0; j < filmesUltimos[i].imagens.length; j++) {
+          await Database.insert('imagem', {
+            'id': DateTime.now().microsecondsSinceEpoch,
+            'url': filmesUltimos[i].imagens[j],
+            'filme_id': filmesUltimos[i].id,
+
+          });
+        }
+
+        for (int k = 0; k < filmesUltimos[i].genero.length; k++) {
+          await Database.insert('genero', {
+            'id': DateTime.now().microsecondsSinceEpoch,
+            'titulo': filmesUltimos[i].genero[k],
+            'filme_id': filmesUltimos[i].id
+          });
+        }
+      }
+    }
+    
+
+
+
+
+
   }
 }
