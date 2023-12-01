@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/components/image_input.dart';
+import 'package:my_movie_list/utils/rotas.dart';
 import 'package:provider/provider.dart';
 import '../controller/usuario_controller.dart';
 import '../models/usuario.dart';
@@ -58,9 +59,6 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   final _formKey = GlobalKey<FormState>();
   final nomeController = TextEditingController();
   final emailController = TextEditingController();
-  final senhaAtualController = TextEditingController();
-  final novaSenhaController = TextEditingController();
-  final confirmarSenhaController = TextEditingController();
 
   Usuario? _usuario;
   File? _pickedImage;
@@ -95,9 +93,6 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   void dispose() {
     nomeController.dispose();
     emailController.dispose();
-    senhaAtualController.dispose();
-    novaSenhaController.dispose();
-    confirmarSenhaController.dispose();
     super.dispose();
   }
 
@@ -107,41 +102,17 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
     ));
   }
 
-  void autenticacao(UsuarioController usuariosProvider) async {
-    if (senhaAtualController.text == _usuario?.senha) {
-      if (novaSenhaController.text.isEmpty ||
-          confirmarSenhaController.text.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Adicione uma nova senha e faça sua confirmação.'),
-        ));
-      } else if (novaSenhaController.text == confirmarSenhaController.text) {
-        if (_usuario != null) {
-          _usuario!.nome = nomeController.text;
-          _usuario!.email = emailController.text;
-          _usuario!.senha = novaSenhaController.text;
-          usuariosProvider.editarUsuario(_usuario!, _pickedImage!);
-          mensagemSucesso();
-        }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('A nova senha e a confirmação não coincidem.'),
-        ));
-      }
-    } else {
-      if (senhaAtualController.text.isEmpty) {
-        editarSemSenha(usuariosProvider);
-      } else
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Senha atual incorreta.'),
-        ));
-    }
-  }
-
   void editarSemSenha(UsuarioController usuariosProvider) {
-    _usuario!.nome = nomeController.text;
-    _usuario!.email = emailController.text;
-    usuariosProvider.editarUsuario(_usuario!, _pickedImage!);
-    mensagemSucesso();
+    if (nomeController.text == '' || emailController.text == '') {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Não é possível deixar campos em branco!'),
+      ));
+    } else {
+      _usuario!.nome = nomeController.text;
+      _usuario!.email = emailController.text;
+      usuariosProvider.editarUsuario(_usuario!, _pickedImage!);
+      mensagemSucesso();
+    }
   }
 
   @override
@@ -181,41 +152,25 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                Container(
-                  color: Colors.white,
-                  child: TextField(
-                    controller: senhaAtualController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Senha Atual',
-                      filled: true,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: Colors.red),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(Rotas.EDITAR_SENHA);
+                      },
+                      child: Text(
+                        'Alterar Senha',
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  color: Colors.white,
-                  child: TextField(
-                    controller: novaSenhaController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Nova Senha',
-                      filled: true,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  color: Colors.white,
-                  child: TextField(
-                    controller: confirmarSenhaController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Confirmar Nova Senha',
-                      filled: true,
-                    ),
-                  ),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 Column(
@@ -224,14 +179,8 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        if (senhaAtualController.text == '' ||
-                            _usuario == null) {
-                          autenticacao(Provider.of<UsuarioController>(context,
-                              listen: false));
-                        } else {
-                          autenticacao(Provider.of<UsuarioController>(context,
-                              listen: false));
-                        }
+                        editarSemSenha(Provider.of<UsuarioController>(context,
+                            listen: false));
                       },
                       child: const Text(
                         'Salvar Alterações',
@@ -249,7 +198,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                         _excluirUsuario();
                       },
                       child: Text(
-                        'Excluir',
+                        'Excluir conta',
                         style: TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.bold,

@@ -6,12 +6,12 @@ import 'package:provider/provider.dart';
 import '../controller/usuario_controller.dart';
 import '../models/usuario.dart';
 
-class EditarUsuarioScreen extends StatefulWidget {
+class EditarSenhaScreen extends StatefulWidget {
   @override
-  _EditarUsuarioScreenState createState() => _EditarUsuarioScreenState();
+  _EditarSenhaScreenState createState() => _EditarSenhaScreenState();
 }
 
-class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
+class _EditarSenhaScreenState extends State<EditarSenhaScreen> {
   final _formKey = GlobalKey<FormState>();
   final senhaAtualController = TextEditingController();
   final novaSenhaController = TextEditingController();
@@ -38,7 +38,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
 
   void mensagemSucesso() {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Perfil atualizado com sucesso.'),
+      content: Text('Senha alterada com sucesso.'),
     ));
   }
 
@@ -54,6 +54,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
           _usuario!.senha = novaSenhaController.text;
           usuariosProvider.editarSenha(_usuario!);
           mensagemSucesso();
+          Navigator.of(context).pop();
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -70,6 +71,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Alterar senha'),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

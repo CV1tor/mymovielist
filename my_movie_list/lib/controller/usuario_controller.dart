@@ -93,7 +93,7 @@ class UsuarioController extends ChangeNotifier {
   }
 
   Future<void> editarSenha(Usuario usuario) async {
-    final response = await http.put(
+    final response = await http.patch(
       Uri.parse('$_baseUrl/usuarios/${usuario.id}.json'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
