@@ -25,10 +25,8 @@ class UsuarioController extends ChangeNotifier {
   }
 
   Future<List<Usuario>> carregarUsuarios() async {
-
     _usuariosCadastrados = [];
 
-    print("Carregando usuarios...\n\n");
     final response = await http.get(
       Uri.parse('$_baseUrl/usuarios.json'),
     );
@@ -48,7 +46,6 @@ class UsuarioController extends ChangeNotifier {
   }
 
   Future<void> adicionarUsuario(Usuario usuario) async {
-   
     var request = jsonEncode({
       "nome": usuario.nome,
       "email": usuario.email,
@@ -92,7 +89,7 @@ class UsuarioController extends ChangeNotifier {
     notifyListeners();
   }
 
-    Future<void> removerUsuario(Usuario usuario) async {
+  Future<void> removerUsuario(Usuario usuario) async {
     final response = await http.delete(
       Uri.parse('$_baseUrl/usuarios/${usuario.id}.json'),
       headers: <String, String>{

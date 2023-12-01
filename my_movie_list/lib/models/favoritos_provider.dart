@@ -6,8 +6,6 @@ import 'dart:convert';
 
 import 'package:provider/provider.dart';
 
-
-
 class FavoritoProviderModel extends ChangeNotifier {
   final _baseUrl = 'https://projeto-un2-mobile-default-rtdb.firebaseio.com/';
   List<Filme> filmesFavoritos = [];
@@ -19,12 +17,9 @@ class FavoritoProviderModel extends ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
-      print(json.decode(response.body));
       Map<String, dynamic> body = json.decode(response.body);
 
       body.forEach((id, element) {
-        print('element');
-        print(element);
         final novoUsuario = Filme.fromJson(element, id as int);
         filmesFavoritos.add(novoUsuario);
       });
@@ -52,7 +47,6 @@ class FavoritoProviderModel extends ChangeNotifier {
 
     if (response.statusCode == 200) {
       final id = jsonDecode(response.body)['name'];
-      print(jsonDecode(response.body));
       filmesFavoritos.add(Filme(
           banner: filme.banner,
           titulo: filme.titulo,
@@ -68,12 +62,11 @@ class FavoritoProviderModel extends ChangeNotifier {
   }
 
   void toggleFavoritos(Filme filme) {
-    if (eFavorito(filme)) {
-      filmesFavoritos.remove(filme);
-    } else {
+    if (!eFavorito(filme)) {
       filmesFavoritos.add(filme);
-      
-    }
+    } else {
+      filmesFavoritos.remove(filme);
+    } 
     notifyListeners();
   }
 

@@ -78,7 +78,6 @@ class _cadastroScreenState extends State<CadastroScreen> {
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
 
-
     bool jaCadastrado = false;
     usuariosProvider.usuarios.forEach((usuario) {
       if (usuario.email == _usuarioEmail.text) {
@@ -95,8 +94,6 @@ class _cadastroScreenState extends State<CadastroScreen> {
         validacaoEmail = false;
       });
     }
-
-    
 
     if (validacaoEmail ||
         validacaoSenhas ||
@@ -131,7 +128,7 @@ class _cadastroScreenState extends State<CadastroScreen> {
         padding: EdgeInsets.all(40),
         child: Column(
           children: [
-            Text(
+            const Text(
               "Novo usuário",
               style: TextStyle(
                   fontSize: 32,
@@ -142,7 +139,7 @@ class _cadastroScreenState extends State<CadastroScreen> {
             TextField(
               controller: _usuarioNome,
               decoration: InputDecoration(
-                  border: UnderlineInputBorder(
+                  border: const UnderlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5))),
                   floatingLabelStyle:
                       TextStyle(color: Colors.grey, fontSize: 18),
@@ -153,12 +150,12 @@ class _cadastroScreenState extends State<CadastroScreen> {
                   prefixIconColor: Colors.grey,
                   fillColor: Colors.white),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: _usuarioEmail,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                  border: UnderlineInputBorder(
+                  border: const UnderlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5))),
                   floatingLabelStyle:
                       TextStyle(color: Colors.grey, fontSize: 18),

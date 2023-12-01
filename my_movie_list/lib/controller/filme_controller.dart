@@ -36,6 +36,7 @@ class FilmeController extends ChangeNotifier {
       }
 
       await atualizarSqlite(_dados);
+      notifyListeners();
       return _dados;
     } else {
       throw Exception('Failed to load filmes');
@@ -49,6 +50,7 @@ class FilmeController extends ChangeNotifier {
       "descricao": comentario.descricao,
       "data": comentario.data.toString(),
       "idUsuario": comentario.idUsuario,
+      "nomeUsuario": comentario.nomeUsuario,
     });
 
     final response = await http.post(
@@ -61,6 +63,7 @@ class FilmeController extends ChangeNotifier {
           titulo: comentario.titulo,
           descricao: comentario.descricao,
           idUsuario: comentario.idUsuario,
+          nomeUsuario: comentario.nomeUsuario,
           data: comentario.data);
 
       _dados[int.parse(idFilme)].comentarios.add(novoComentario);
@@ -77,6 +80,7 @@ class FilmeController extends ChangeNotifier {
       "descricao": comentario.descricao,
       "data": comentario.data.toString(),
       "idUsuario": comentario.idUsuario,
+      "nomeUsuario": comentario.nomeUsuario,
     });
 
     final response = await http.put(
