@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:my_movie_list/components/image_input.dart';
 import 'package:provider/provider.dart';
 import '../controller/usuario_controller.dart';
 import '../models/usuario.dart';
@@ -10,7 +13,7 @@ class EditarUsuarioScreen extends StatefulWidget {
 
 class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   Future<void> _excluirUsuario() async {
-    bool confirmacao = await showDialog(
+    var confirmacao = await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -40,7 +43,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
         );
       },
     );
-
+    if (confirmacao == Null) {
+      confirmacao = false;
+    }
     if (confirmacao == true) {
       // excluir
       final usuariosProvider =
@@ -58,13 +63,21 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   final confirmarSenhaController = TextEditingController();
 
   Usuario? _usuario;
+  File? _pickedImage;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
     _carregarUsuario(usuariosProvider);
+    if (usuariosProvider.usuarioAtual.foto?.path != '') {
+      _pickedImage = usuariosProvider.usuarioAtual.foto;
+    }
+  }
+
+  void _selectImage(File? pickedImage) {
+    _pickedImage = pickedImage;
   }
 
   Future<void> _carregarUsuario(UsuarioController usuariosProvider) async {
@@ -106,7 +119,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
           _usuario!.nome = nomeController.text;
           _usuario!.email = emailController.text;
           _usuario!.senha = novaSenhaController.text;
-          usuariosProvider.editarUsuario(_usuario!);
+          usuariosProvider.editarUsuario(_usuario!, _pickedImage!);
           mensagemSucesso();
         }
       } else {
@@ -127,7 +140,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   void editarSemSenha(UsuarioController usuariosProvider) {
     _usuario!.nome = nomeController.text;
     _usuario!.email = emailController.text;
-    usuariosProvider.editarUsuario(_usuario!);
+    usuariosProvider.editarUsuario(_usuario!, _pickedImage!);
     mensagemSucesso();
   }
 
@@ -145,11 +158,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                 const SizedBox(
                   height: 70,
                 ),
-                CircleAvatar(
-                  backgroundImage:
-                      const AssetImage('assets/images/spiderverse.jpg'),
-                  radius: 60,
-                ),
+                ImageInput(this._selectImage, initialImage: _pickedImage),
                 const SizedBox(height: 20),
                 Container(
                   color: Colors.white,

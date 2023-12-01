@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/models/usuario.dart';
@@ -8,7 +9,8 @@ import 'package:http/http.dart' as http;
 class UsuarioController extends ChangeNotifier {
   final _baseUrl = 'https://projeto-un2-mobile-default-rtdb.firebaseio.com/';
   List<Usuario> _usuariosCadastrados = [];
-  late Usuario usuarioAtual;
+  late Usuario usuarioAtual =
+      Usuario(nome: '0', email: '0', senha: '0', id: '0');
 
   List<Usuario> get usuarios => _usuariosCadastrados;
 
@@ -20,7 +22,7 @@ class UsuarioController extends ChangeNotifier {
     usuarioAtual = usuario;
   }
 
-  Future<Usuario> getUsuarioAtual() async {
+  Usuario? getUsuarioAtual() {
     return usuarioAtual;
   }
 
@@ -50,7 +52,7 @@ class UsuarioController extends ChangeNotifier {
       "nome": usuario.nome,
       "email": usuario.email,
       "senha": usuario.senha,
-      "foto": usuario.foto,
+      "foto": '',
     });
 
     final response = await http.post(Uri.parse('$_baseUrl/usuarios.json'),
@@ -72,7 +74,7 @@ class UsuarioController extends ChangeNotifier {
     }
   }
 
-  Future<void> editarUsuario(Usuario usuario) async {
+  Future<void> editarUsuario(Usuario usuario, File foto) async {
     final response = await http.put(
       Uri.parse('$_baseUrl/usuarios/${usuario.id}.json'),
       headers: <String, String>{
@@ -82,10 +84,26 @@ class UsuarioController extends ChangeNotifier {
         'nome': usuario.nome,
         'email': usuario.email,
         'senha': usuario.senha,
-        'foto': usuario.foto,
+        'foto': foto.path,
       }),
     );
+    await carregarUsuarios();
+    setUsuarioAtual(usuario.nome);
+    notifyListeners();
+  }
 
+  Future<void> editarSenha(Usuario usuario) async {
+    final response = await http.put(
+      Uri.parse('$_baseUrl/usuarios/${usuario.id}.json'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'senha': usuario.senha,
+      }),
+    );
+    await carregarUsuarios();
+    setUsuarioAtual(usuario.nome);
     notifyListeners();
   }
 
@@ -97,6 +115,7 @@ class UsuarioController extends ChangeNotifier {
       },
     );
     _usuariosCadastrados.remove(usuario);
+    usuarioAtual = Usuario(nome: '0', email: '0', senha: '0', id: '0');
     notifyListeners();
   }
 }
