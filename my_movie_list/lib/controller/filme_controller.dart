@@ -31,16 +31,15 @@ class FilmeController extends ChangeNotifier {
       final bancoImagensSqlite = await Database.getData('imagem');
       final bancoGeneroSqlite = await Database.getData('genero');
       print('hello\n');
-      bancoFilmesSqlite.forEach((filme) async {
-        final generosFilmeData = await Database.getDataGeneroOuImagem('genero', filme['id']);
+      for (int i = 0; i < bancoFilmesSqlite.length; i++) {
+        final generosFilmeData = await Database.getDataGeneroOuImagem('genero', bancoFilmesSqlite[i]['id']);
         List<String> generos = generosFilmeData.map((genero) => genero['titulo'].toString()).toList();
 
-        final imagensFilmeData = await Database.getDataGeneroOuImagem('imagem', filme['id']);
+        final imagensFilmeData = await Database.getDataGeneroOuImagem('imagem', bancoFilmesSqlite[i]['id']);
         List<String> imagens = imagensFilmeData.map((imagem) => imagem['url'].toString()).toList();
 
-        _dados.add(Filme(id: filme['id'].toString(), titulo: filme['titulo'], banner: filme['banner'], descricao: filme['descricao'], genero: generos, imagens: imagens, comentarios: []));
-        print(_dados);
-       });
+        _dados.add(Filme(id: bancoFilmesSqlite[i]['id'].toString(), titulo: bancoFilmesSqlite[i]['titulo'], banner: bancoFilmesSqlite[i]['banner'], descricao: bancoFilmesSqlite[i]['descricao'], genero: generos, imagens: imagens, comentarios: []));
+      }
 
       print(_dados);
        return _dados;
