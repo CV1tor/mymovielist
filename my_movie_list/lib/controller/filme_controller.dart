@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:my_movie_list/models/comentario.dart';
 import 'package:my_movie_list/models/filme.dart';
 
@@ -20,11 +21,35 @@ class FilmeController extends ChangeNotifier {
   }
 
   Future<List<Filme>> carregarFilmes() async {
-
+    
+    final conectadoInternet = await InternetConnectionChecker().hasConnection;
     _dados = [];
+    print(" \n RODANDO LOAD \N");
+        if (!conectadoInternet) {
+          print("\N SEM INTERNET! \N");
+      final bancoFilmesSqlite = await Database.getData('filme');
+      final bancoImagensSqlite = await Database.getData('imagem');
+      final bancoGeneroSqlite = await Database.getData('genero');
+      print('hello\n');
+      bancoFilmesSqlite.forEach((filme) async {
+        final generosFilmeData = await Database.getDataGeneroOuImagem('genero', filme['id']);
+        List<String> generos = generosFilmeData.map((genero) => genero['titulo'].toString()).toList();
+
+        final imagensFilmeData = await Database.getDataGeneroOuImagem('imagem', filme['id']);
+        List<String> imagens = imagensFilmeData.map((imagem) => imagem['url'].toString()).toList();
+
+        _dados.add(Filme(id: filme['id'].toString(), titulo: filme['titulo'], banner: filme['banner'], descricao: filme['descricao'], genero: generos, imagens: imagens, comentarios: []));
+        print(_dados);
+       });
+
+      print(_dados);
+       return _dados;
+    }
+    
     final response = await http.get(
       Uri.parse('$_baseUrl/filmes.json'),
     );
+
 
     if (response.statusCode == 200) {
       List<dynamic> body = json.decode(response.body);
@@ -112,46 +137,58 @@ class FilmeController extends ChangeNotifier {
   }
 
   Future<void> atualizarSqlite(List<Filme> filmes) async {
-    
     final filmesUltimos = filmes;
-    filmesUltimos.sort((a, b) => b.id.compareTo(a.id)); // ordena a lista para os adicionados por último
-    
+    filmesUltimos.sort((a, b) =>
+        b.id.compareTo(a.id)); // ordena a lista para os adicionados por último
+
     final bancoFilmesSqlite = await Database.getData('filme');
+    final bancoImagensSqlite = await Database.getData('imagem');
+    final bancoGeneroSqlite = await Database.getData('genero');
 
     if (bancoFilmesSqlite.length == 5) {
-      print('\n BANCO LOCAL COM MAIS DE 5 REGISTROS! CHECANDO SE É NECESSÁRIO ALTERAÇÃO \n');
-    }
-    else {
+      print('\n BANCO LOCAL LOTADO! CHECANDO SE É NECESSÁRIA ATUALIZAÇÃO... \n');
       for (int i = 0; i < 5; i++) {
-        await Database.insert('filme', {
-          'id': filmesUltimos[i].id,
-          'titulo': filmesUltimos[i].titulo,
-          'banner': filmesUltimos[i].banner,
-        });
+        bool contemFilme = bancoFilmesSqlite
+            .any((filme) => filme['id'].toString() == filmesUltimos[i].id);
 
-        for(int j = 0; j < filmesUltimos[i].imagens.length; j++) {
-          await Database.insert('imagem', {
-            'id': DateTime.now().microsecondsSinceEpoch,
-            'url': filmesUltimos[i].imagens[j],
-            'filme_id': filmesUltimos[i].id,
-
-          });
-        }
-
-        for (int k = 0; k < filmesUltimos[i].genero.length; k++) {
-          await Database.insert('genero', {
-            'id': DateTime.now().microsecondsSinceEpoch,
-            'titulo': filmesUltimos[i].genero[k],
-            'filme_id': filmesUltimos[i].id
-          });
+        if (!contemFilme) {
+          print('\n BANCO NECESSITANDO ATUALIZAÇÃO! NÃO POSSUI ${filmesUltimos[i].titulo} \n');
+          Database.deleteFilme(bancoFilmesSqlite[0]['id']);
+          adicionarFilmeSqlite(filmesUltimos[i]);
         }
       }
+      print('\n BANCO ATUALIZADO! \n');
+    } else {
+      for (int i = 0; i < 5; i++) {
+        print('\n BANCO LOCAL SENDO POPULADO PELO FIREBASE! \n');
+        adicionarFilmeSqlite(filmesUltimos[i]);
+      }
     }
-    
-
-
-
-
-
   }
+
+  void adicionarFilmeSqlite(Filme filme) async {
+    print('\n ADICIONANDO FILME! \n');
+    await Database.insert('filme',
+        {'id': filme.id, 'titulo': filme.titulo, 'banner': filme.banner, 'descricao': filme.descricao});
+
+    for (int i = 0; i < filme.imagens.length; i++) {
+      await Database.insert('imagem', {
+        'id': DateTime.now().microsecondsSinceEpoch,
+        'url': filme.imagens[i],
+        'filme_id': filme.id
+      });
+    }
+
+    for (int j = 0; j < filme.genero.length; j++) {
+      await Database.insert('genero', {
+        'id': DateTime.now().microsecondsSinceEpoch,
+        'titulo': filme.genero[j],
+        'filme_id': filme.id
+      });
+    }
+
+    print('\n FILME ADICIONADO! \n');
+  }
+
+  
 }

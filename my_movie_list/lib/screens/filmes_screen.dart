@@ -23,7 +23,7 @@ class FilmesScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Text('Erro ao carregar os filmes: ${snapshot.error}');
+            return Center(child: Text('Erro ao carregar os filmes: ${snapshot.error}', style: TextStyle(color: Colors.white),));
           } else {
             final filmes = snapshot.data;
             return SizedBox(

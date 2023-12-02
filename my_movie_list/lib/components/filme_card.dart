@@ -18,14 +18,19 @@ class FilmeCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Card(
-            clipBehavior: Clip.antiAlias,
+            clipBehavior: Clip.hardEdge,
+            
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: Image(
-              image: NetworkImage(filme.banner),
+            child: Image.network(
+              filme.banner,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset('assets/images/banner_placeholder.png' , fit: BoxFit.contain, );
+              },),
+              
             ),
-          ),
+          
           Text(
             filme.titulo,
             style: const TextStyle(
