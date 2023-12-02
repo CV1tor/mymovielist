@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'filme.dart';
 
 class Usuario {
@@ -5,20 +7,22 @@ class Usuario {
   String nome;
   String email;
   String senha;
-  String foto;
+  File? foto;
 
   Usuario(
       {required this.nome,
       required this.email,
       required this.senha,
-      this.foto = 'a',
-      required this.id});
+      required this.id,
+      this.foto});
 
   factory Usuario.fromJson(String id, Map<String, dynamic> json) {
     final nome = json['nome'];
     final email = json['email'];
     final senha = json['senha'];
-    final foto = json['foto'];
+    final fotoPath = json['foto'];
+
+    File foto = File(fotoPath);
 
     return Usuario(
       id: id,

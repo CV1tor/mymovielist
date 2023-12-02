@@ -4,6 +4,7 @@ import 'package:my_movie_list/controller/usuario_controller.dart';
 import 'package:my_movie_list/models/favoritos_provider.dart';
 import 'package:my_movie_list/models/filme.dart';
 import 'package:my_movie_list/screens/cadastro_screen.dart';
+import 'package:my_movie_list/screens/editar_senha_screen.dart';
 import 'package:my_movie_list/screens/filme_detalhe_screen.dart';
 import 'package:my_movie_list/screens/login_screen.dart';
 import 'package:my_movie_list/screens/tabs_screen.dart';
@@ -72,6 +73,7 @@ class _MyAppState extends State<MyApp> {
                 toggleFavoritos: _toggleFavoritos,
                 eFavorito: _eFavorito,
               ),
+          Rotas.EDITAR_SENHA: (context) => EditarSenhaScreen(),
         },
         debugShowCheckedModeBanner: false,
       ),

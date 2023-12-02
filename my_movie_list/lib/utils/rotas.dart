@@ -3,4 +3,5 @@ class Rotas {
   static const CADASTRO = '/cadastro';
   static const HOME = '/';
   static const MOVIE_DETAIL = '/movie-detail';
+  static const EDITAR_SENHA = '/editar-senha';
 }

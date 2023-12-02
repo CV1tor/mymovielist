@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:my_movie_list/controller/usuario_controller.dart';
 import 'package:my_movie_list/models/usuario.dart';
+import 'package:my_movie_list/utils/rotas.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,15 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String _erro = "";
 
-  @override
-  void initState() {
-    super.initState();
-
-    final usuariosProvider =
-        Provider.of<UsuarioController>(context, listen: false);
-
-    usuariosProvider.carregarUsuarios();
-  }
+  final LocalAuthentication _localAuthentication = LocalAuthentication();
 
   _autenticacao(BuildContext context) async {
     bool resposta = false;
@@ -47,11 +39,47 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _login(BuildContext context) async {
     if (await _autenticacao(context)) {
+      setState(() {
+        _erro = "";
+      });
       Navigator.of(context).pushNamed('/');
     } else {
       setState(() {
         _erro = "Usuário ou senha incorretos!";
       });
+    }
+  }
+
+  Future<void> _autenticacaoBiometrica() async {
+    final usuariosProvider =
+        Provider.of<UsuarioController>(context, listen: false);
+    try {
+      // Verifica se o dispositivo suporta autenticação biométrica
+      bool isBiometricAvailable = await _localAuthentication.canCheckBiometrics;
+
+      if (isBiometricAvailable) {
+        // Autentica usando o sensor biométrico
+        bool isAuthenticated = await _localAuthentication.authenticate(
+          localizedReason: 'Toque no sensor biométrico para autenticar',
+        );
+
+        if (isAuthenticated) {
+          if (usuariosProvider.usuarioAtual.nome != '0') {
+            Navigator.pushNamed(context, Rotas.HOME);
+          } else {
+            setState(() {
+              _erro = "Login necessário para prosseguir.";
+            });
+          }
+        }
+      } else {
+        // O dispositivo não suporta autenticação biométrica
+        setState(() {
+          _erro = "O dispositivo não suporta autenticação biométrica.";
+        });
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -109,15 +137,38 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     Expanded(
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.fromLTRB(0, 15, 0, 15)),
-                            onPressed: () => _login(context),
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ))),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.fromLTRB(0, 15, 0, 15)),
+                        onPressed: () async {
+                          _login(context);
+                        },
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.fromLTRB(0, 15, 0, 15)),
+                        onPressed: _autenticacaoBiometrica,
+                        child: Text(
+                          "Biometria",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -127,20 +178,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Expanded(
                       child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                            side: BorderSide(color: Colors.red),
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)))),
-                        onPressed: () =>
-                            Navigator.of(context).pushNamed('/cadastro'),
-                        child: Text(
-                          "Cadastro",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        )
-                      )
+                          style: OutlinedButton.styleFrom(
+                              padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                              side: BorderSide(color: Colors.red),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5)))),
+                          onPressed: () =>
+                              Navigator.of(context).pushNamed('/cadastro'),
+                          child: Text(
+                            "Cadastro",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          )),
                     ),
                   ],
                 )
