@@ -52,7 +52,9 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
           child: Column(
             children: <Widget>[
               Image.network(filme.banner,
-                  height: 300, width: 400, fit: BoxFit.contain),
+                  height: 300, width: 400, fit: BoxFit.contain,errorBuilder: (context, error, stackTrace) {
+                return Image.asset('assets/images/banner_placeholder.png' , fit: BoxFit.contain, );
+              }, ),
               Container(
                 padding: const EdgeInsets.all(12),
                 child: Column(
@@ -148,7 +150,9 @@ class _FilmeDetalheScreenState extends State<FilmeDetalheScreen> {
                             final imagem = filme.imagens[index];
                             return Padding(
                               padding: const EdgeInsets.only(right: 15),
-                              child: Image.network(imagem),
+                              child: Image.network(imagem, errorBuilder: (context, error, stackTrace) {
+                return Image.asset('assets/images/banner_placeholder.png' , fit: BoxFit.contain, );
+              }, ),
                             );
                           }),
                     ),

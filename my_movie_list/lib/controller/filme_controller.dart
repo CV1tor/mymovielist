@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:my_movie_list/models/comentario.dart';
 import 'package:my_movie_list/models/filme.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:my_movie_list/utils/database.dart';
 
 class FilmeController extends ChangeNotifier {
   final _baseUrl = 'https://projeto-un2-mobile-default-rtdb.firebaseio.com/';
@@ -19,11 +21,34 @@ class FilmeController extends ChangeNotifier {
   }
 
   Future<List<Filme>> carregarFilmes() async {
-
+    
+    final conectadoInternet = await InternetConnectionChecker().hasConnection;
     _dados = [];
+    print(" \n RODANDO LOAD \N");
+        if (!conectadoInternet) {
+          print("\N SEM INTERNET! \N");
+      final bancoFilmesSqlite = await Database.getData('filme');
+      final bancoImagensSqlite = await Database.getData('imagem');
+      final bancoGeneroSqlite = await Database.getData('genero');
+      print('hello\n');
+      for (int i = 0; i < bancoFilmesSqlite.length; i++) {
+        final generosFilmeData = await Database.getDataGeneroOuImagem('genero', bancoFilmesSqlite[i]['id']);
+        List<String> generos = generosFilmeData.map((genero) => genero['titulo'].toString()).toList();
+
+        final imagensFilmeData = await Database.getDataGeneroOuImagem('imagem', bancoFilmesSqlite[i]['id']);
+        List<String> imagens = imagensFilmeData.map((imagem) => imagem['url'].toString()).toList();
+
+        _dados.add(Filme(id: bancoFilmesSqlite[i]['id'].toString(), titulo: bancoFilmesSqlite[i]['titulo'], banner: bancoFilmesSqlite[i]['banner'], descricao: bancoFilmesSqlite[i]['descricao'], genero: generos, imagens: imagens, comentarios: []));
+      }
+
+      print(_dados);
+       return _dados;
+    }
+    
     final response = await http.get(
       Uri.parse('$_baseUrl/filmes.json'),
     );
+
 
     if (response.statusCode == 200) {
       List<dynamic> body = json.decode(response.body);
@@ -34,6 +59,7 @@ class FilmeController extends ChangeNotifier {
         _dados.add(filme);
       }
 
+      await atualizarSqlite(_dados);
       notifyListeners();
       return _dados;
     } else {
@@ -108,4 +134,60 @@ class FilmeController extends ChangeNotifier {
       throw Exception('Erro ao remover comentário');
     }
   }
+
+  Future<void> atualizarSqlite(List<Filme> filmes) async {
+    final filmesUltimos = filmes;
+    filmesUltimos.sort((a, b) =>
+        b.id.compareTo(a.id)); // ordena a lista para os adicionados por último
+
+    final bancoFilmesSqlite = await Database.getData('filme');
+    final bancoImagensSqlite = await Database.getData('imagem');
+    final bancoGeneroSqlite = await Database.getData('genero');
+
+    if (bancoFilmesSqlite.length == 5) {
+      print('\n BANCO LOCAL LOTADO! CHECANDO SE É NECESSÁRIA ATUALIZAÇÃO... \n');
+      for (int i = 0; i < 5; i++) {
+        bool contemFilme = bancoFilmesSqlite
+            .any((filme) => filme['id'].toString() == filmesUltimos[i].id);
+
+        if (!contemFilme) {
+          print('\n BANCO NECESSITANDO ATUALIZAÇÃO! NÃO POSSUI ${filmesUltimos[i].titulo} \n');
+          Database.deleteFilme(bancoFilmesSqlite[0]['id']);
+          adicionarFilmeSqlite(filmesUltimos[i]);
+        }
+      }
+      print('\n BANCO ATUALIZADO! \n');
+    } else {
+      for (int i = 0; i < 5; i++) {
+        print('\n BANCO LOCAL SENDO POPULADO PELO FIREBASE! \n');
+        adicionarFilmeSqlite(filmesUltimos[i]);
+      }
+    }
+  }
+
+  void adicionarFilmeSqlite(Filme filme) async {
+    print('\n ADICIONANDO FILME! \n');
+    await Database.insert('filme',
+        {'id': filme.id, 'titulo': filme.titulo, 'banner': filme.banner, 'descricao': filme.descricao});
+
+    for (int i = 0; i < filme.imagens.length; i++) {
+      await Database.insert('imagem', {
+        'id': DateTime.now().microsecondsSinceEpoch,
+        'url': filme.imagens[i],
+        'filme_id': filme.id
+      });
+    }
+
+    for (int j = 0; j < filme.genero.length; j++) {
+      await Database.insert('genero', {
+        'id': DateTime.now().microsecondsSinceEpoch,
+        'titulo': filme.genero[j],
+        'filme_id': filme.id
+      });
+    }
+
+    print('\n FILME ADICIONADO! \n');
+  }
+
+  
 }

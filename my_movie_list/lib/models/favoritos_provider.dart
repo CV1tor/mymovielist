@@ -66,11 +66,13 @@ class FavoritoProviderModel extends ChangeNotifier {
       filmesFavoritos.add(filme);
     } else {
       filmesFavoritos.remove(filme);
-    }
+    } 
     notifyListeners();
   }
 
   bool eFavorito(Filme filme) {
     return filmesFavoritos.contains(filme);
+
+    
   }
 }
