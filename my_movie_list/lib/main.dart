@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/controller/filme_controller.dart';
 import 'package:my_movie_list/controller/usuario_controller.dart';
-import 'package:my_movie_list/models/favoritos_provider.dart';
+import 'package:my_movie_list/models/favoritos.dart';
 import 'package:my_movie_list/models/filme.dart';
 import 'package:my_movie_list/screens/cadastro_screen.dart';
 import 'package:my_movie_list/screens/editar_senha_screen.dart';
@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 void main() => runApp(MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => FavoritoProviderModel())
+        ChangeNotifierProvider(create: (context) => FavoritosModel())
       ],
       child: MyApp(),
     ));

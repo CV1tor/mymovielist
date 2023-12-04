@@ -28,7 +28,8 @@ class _cadastroScreenState extends State<CadastroScreen> {
         id: DateTime.now().microsecondsSinceEpoch.toString(),
         nome: _usuarioNome.text,
         email: _usuarioEmail.text,
-        senha: _usuarioSenha.text);
+        senha: _usuarioSenha.text,
+        filmesFavoritos: []);
 
     return novoUsuario;
   }

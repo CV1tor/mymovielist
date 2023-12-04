@@ -10,7 +10,7 @@ class UsuarioController extends ChangeNotifier {
   final _baseUrl = 'https://projeto-un2-mobile-default-rtdb.firebaseio.com/';
   List<Usuario> _usuariosCadastrados = [];
   late Usuario usuarioAtual =
-      Usuario(nome: '0', email: '0', senha: '0', id: '0');
+      Usuario(nome: '0', email: '0', senha: '0', id: '0', filmesFavoritos: []);
 
   List<Usuario> get usuarios => _usuariosCadastrados;
 
@@ -67,14 +67,15 @@ class UsuarioController extends ChangeNotifier {
           nome: usuario.nome,
           email: usuario.email,
           senha: usuario.senha,
-          id: id));
+          id: id,
+          filmesFavoritos: []));
       notifyListeners();
     } else {
       throw Exception('Erro ao adicionar usuario');
     }
   }
 
-  Future<void> editarUsuario(Usuario usuario, File foto) async {
+  Future<void> editarUsuario(Usuario usuario, [File? foto, List<String>? favoitesMoviesId]) async {
     final response = await http.put(
       Uri.parse('$_baseUrl/usuarios/${usuario.id}.json'),
       headers: <String, String>{
@@ -84,7 +85,8 @@ class UsuarioController extends ChangeNotifier {
         'nome': usuario.nome,
         'email': usuario.email,
         'senha': usuario.senha,
-        'foto': foto.path,
+        'foto': foto != null ? foto.path : '',
+        'filmesFavoritos': favoitesMoviesId.toString().isNotEmpty ? favoitesMoviesId : []
       }),
     );
     await carregarUsuarios();
@@ -115,7 +117,7 @@ class UsuarioController extends ChangeNotifier {
       },
     );
     _usuariosCadastrados.remove(usuario);
-    usuarioAtual = Usuario(nome: '0', email: '0', senha: '0', id: '0');
+    usuarioAtual = Usuario(nome: '0', email: '0', senha: '0', id: '0', filmesFavoritos: []);
     notifyListeners();
   }
 }

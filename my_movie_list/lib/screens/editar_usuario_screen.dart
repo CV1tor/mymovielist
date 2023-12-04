@@ -110,7 +110,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
     } else {
       _usuario!.nome = nomeController.text;
       _usuario!.email = emailController.text;
-      usuariosProvider.editarUsuario(_usuario!, _pickedImage!);
+      usuariosProvider.editarUsuario(_usuario!, _pickedImage, _usuario!.filmesFavoritos);
       mensagemSucesso();
     }
   }
@@ -119,10 +119,11 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Container(
+            height: 700,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
