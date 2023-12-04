@@ -53,10 +53,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _autenticacaoBiometrica() async {
     final usuariosProvider =
         Provider.of<UsuarioController>(context, listen: false);
+    
     try {
       // Verifica se o dispositivo suporta autenticação biométrica
       bool isBiometricAvailable = await _localAuthentication.canCheckBiometrics;
-
+      
       if (isBiometricAvailable) {
         // Autentica usando o sensor biométrico
         bool isAuthenticated = await _localAuthentication.authenticate(

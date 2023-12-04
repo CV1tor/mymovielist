@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie_list/components/filme_item.dart';
-import 'package:my_movie_list/models/favoritos_provider.dart';
+import 'package:my_movie_list/controller/filme_controller.dart';
+import 'package:my_movie_list/controller/usuario_controller.dart';
+import 'package:my_movie_list/models/favoritos.dart';
 import 'package:my_movie_list/models/filme.dart';
 import 'package:provider/provider.dart';
 
@@ -60,19 +62,28 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FavoritoProviderModel>(
-      builder: (context, favoritos, child) {
-        if (favoritos.filmesFavoritos.isEmpty) {
+    final filmes = Provider.of<FilmeController>(context, listen: false);
+    final favoritos = Provider.of<FavoritosModel>(context, listen: false);
+   
+    return Consumer<UsuarioController>(
+      builder: (context, usuarios, child) {
+        final filmesFavoritos = usuarios.usuarioAtual.filmesFavoritos;
+
+        if (filmesFavoritos.first.toString().isEmpty) {
           return const Center(
-              child: Text('Nenhum Filme Marcado como Favorito!'));
+              child: Text(
+                'Nenhum Filme Marcado como Favorito!',
+                style: TextStyle(color: Colors.white)
+              )
+            );
         } else {
           return ListView.builder(
-            itemCount: favoritos.filmesFavoritos.length,
+            itemCount: filmesFavoritos.length,
             itemBuilder: (ctx, index) {
-              final filme = favoritos.filmesFavoritos[index];
+              final filme = filmes.dados.firstWhere((filme) => filme.id == filmesFavoritos[index]);
               return FilmeItem(
                 filme: filme,
-                deleteFavorito: () => favoritos.toggleFavoritos(filme),
+                deleteFavorito: () => favoritos.toggleFavoritos(filme, usuarios, filmesFavoritos),
               );
             },
           );
