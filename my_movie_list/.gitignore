@@ -32,6 +32,7 @@
 
 #Android
 !android/*
+!android/
 
 #Arquivos de configuração
 !.gitignore
